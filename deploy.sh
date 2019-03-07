@@ -39,11 +39,12 @@ function init () {
             apt-get -y install python2.7
 
             apt-get -y install curl
+        else
+            echo Could not find package manager
         fi
+    else
+        echo Platform not recognized
     fi
-
-
-    echo Platform not recognized
 }
 ################################################################################
 
