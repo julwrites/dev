@@ -49,14 +49,13 @@ def redhat_dist():
     return linux() and platform.linux_distribution()[0] in ['RedHat', 'CentOS']
 
 
-format_cmd = ''
-
-
 def run(cmd):
-    return subprocess.call(cmd)
+    return subprocess.call(cmd, shell=True)
 
 
 def init():
+    format_cmd = ''
+
     if windows():
         format_cmd = 'choco install {} -y'
     elif darwin():
@@ -71,6 +70,8 @@ def init():
             run('subscription-manager repos --enable rhel-server-rhscl-7-rpms')
 
         format_cmd = 'yum -y install {}'
+
+    return format_cmd
 
 
 def package():
@@ -96,7 +97,7 @@ def package():
 
 
 def install():
-    init()
+    format_cmd = init()
 
     for pkg in package():
         for i in range(3):

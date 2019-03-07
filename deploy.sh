@@ -54,9 +54,9 @@ function deploy () {
 }
 ################################################################################
 
-
-
 init
 deploy
+
+read -p "Press any key to continue..."
 
 exit
