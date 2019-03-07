@@ -53,7 +53,9 @@ function init () {
 function deploy () {
     cd /usr/tmp
 
-    curl -o deploy.py "https://raw.githubusercontent.com/julwrites/tools/master/deploy.py"
+    rm -rf deploy.py
+
+    curl "https://raw.githubusercontent.com/julwrites/tools/master/deploy.py" > deploy.py
 
     chmod 777 deploy.py
 
