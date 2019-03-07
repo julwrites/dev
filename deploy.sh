@@ -17,25 +17,25 @@ function init () {
     if [ "$(uname)" == "Darwin" ]; then
         /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
-        pkgr=brew
-        silent=''
+        brew install python@2
     elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
         admin
 
         if [ -n "$(command -v yum)" ]; then
-            pkgr=yum
+            yum upgrade -y
 
-            $pkgr upgrade -y
+            # Skip installing Python, Debian distros have it natively
+
+            yum -y install curl
         elif [ -n "$(command -v apt-get)" ]; then
-            pkgr=apt-get
+            apt-get upgrade -y --force-yes -qq
 
-            $pkgr upgrade -y --force-yes -qq
+            apt-get -y install python2.7
+
+            apt-get -y install curl
         fi
-        silent='-y'
     fi
 
-    $pkgr $silent install curl
-    $pkgr $silent install python
 
     echo Platform not recognized
 }

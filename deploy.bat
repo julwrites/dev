@@ -41,7 +41,7 @@ IF '%errorlevel%' NEQ '0' (
 
     CALL %pkgr% upgrade chocolatey
 
-    CALL %pkgr% install python
+    CALL %pkgr% install python2
 
     @"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://github.com/julwrites/deploy.py'))"
 
