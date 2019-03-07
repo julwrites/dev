@@ -106,5 +106,5 @@ def install():
                 break
 
 
-webbrowser.open_new('https://tehj.org')
+# webbrowser.open_new('https://tehj.org')
 install()
