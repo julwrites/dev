@@ -55,7 +55,7 @@ function deploy () {
 
     rm -rf deploy.py
 
-    curl "https://raw.githubusercontent.com/julwrites/tools/master/deploy.py" &> deploy.py
+    curl "https://github.com/julwrites/tools/master/deploy.py" > deploy.py
 
     chmod 777 deploy.py
 
