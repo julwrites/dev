@@ -41,7 +41,7 @@ function init () {
             echo Could not find package manager
         fi
 
-        wget "https://github.com/julwrites/tools/raw/master/deploy.py"
+        wget -O deploy.py "https://github.com/julwrites/tools/raw/master/deploy.py"
     else
         echo Platform not recognized
     fi
@@ -61,7 +61,7 @@ function deploy () {
 }
 ################################################################################
 
-init
+deploy
 
 read -p "Press any key to continue..."
 
