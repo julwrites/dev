@@ -4,7 +4,7 @@ import subprocess
 
 Common = ['git', 'vscode', 'cmake', 'conan', 'nodejs']
 Windows = [
-    'python3', 'cmdermini', 'neovim', 'llvm', 'visualstudio2017community'
+    'python3', 'cmdermini', 'neovim', 'llvm'
 ]
 Darwin = ['python3', 'llvm']
 Debian = ['python3.6', 'python3-pip', 'clang-7', 'lldb-7', 'lld-7']
