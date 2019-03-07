@@ -27,13 +27,13 @@ function init () {
 
         cd /usr/tmp
 
-        if [ -n "$(command -v yum)" ]; then
+        if [ "$(command -v yum >/dev/null 2>&1)" ]; then
             yum upgrade -y
 
             # Skip installing Python, Debian distros have it natively
 
             yum -y install curl
-        elif [ -n "$(command -v apt-get)" ]; then
+        elif [ "$(command -v apt-get >/dev/null 2>&1)" ]; then
             apt-get upgrade -y --force-yes -qq
 
             apt-get -y install python2.7
