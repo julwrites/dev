@@ -3,9 +3,7 @@ import webbrowser
 import subprocess
 
 Common = ['git', 'vscode', 'cmake', 'conan', 'nodejs']
-Windows = [
-    'python3', 'cmdermini', 'neovim', 'llvm'
-]
+Windows = ['python3', 'cmdermini', 'neovim', 'llvm']
 Darwin = ['python3', 'llvm']
 Debian = ['python3.6', 'python3-pip', 'clang-7', 'lldb-7', 'lld-7']
 RedHat = [
@@ -15,39 +13,39 @@ RedHat = [
 
 
 def windows():
-    return platform.uname()[0] in ['Windows']
+    return 'Windows' in platform.uname()[0]
 
 
 def darwin():
-    return platform.uname()[0] in ['Darwin']
+    return 'Darwin' in platform.uname()[0]
 
 
 def linux():
-    return platform.uname()[0] in ['Linux']
+    return 'Linux' in platform.uname()[0]
 
 
 def debian():
-    return linux() and platform.linux_distribution()[0] in ['Debian']
+    return linux() and 'Debian' in platform.linux_distribution()[0]
 
 
 def ubuntu():
-    return linux() and platform.linux_distribution()[0] in ['Ubuntu']
+    return linux() and 'Ubuntu' in platform.linux_distribution()[0]
 
 
 def debian_dist():
-    return linux() and platform.linux_distribution()[0] in ['Debian', 'Ubuntu']
+    return linux() and (debian() or ubuntu())
 
 
 def redhat():
-    return linux() and platform.linux_distribution()[0] in ['RedHat']
+    return linux() and 'Red Hat' in platform.linux_distribution()[0]
 
 
 def centos():
-    return linux() and platform.linux_distribution()[0] in ['CentOS']
+    return linux() and 'CentOS' in platform.linux_distribution()[0]
 
 
 def redhat_dist():
-    return linux() and platform.linux_distribution()[0] in ['RedHat', 'CentOS']
+    return linux() and (redhat() or centos())
 
 
 def run(cmd):
