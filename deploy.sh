@@ -7,7 +7,7 @@ function admin () {
 
     DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
-    [ "$UID" -eq 0 ] || exec sudo ./$DIR/deploy.sh
+    [ "$UID" -eq 0 ] || cd $DIR && exec sudo ./deploy.sh
 }
 ################################################################################
 
