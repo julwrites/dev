@@ -14,14 +14,16 @@ function admin () {
 # BashScriptPlatform
 ################################################################################
 function init () {
-    cd /usr/tmp
-
     if [ "$(uname)" == "Darwin" ]; then
+        cd /usr/tmp
+
         /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
         brew install python@2
     elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
         admin
+
+        cd /usr/tmp
 
         if [ -n "$(command -v yum)" ]; then
             yum upgrade -y
