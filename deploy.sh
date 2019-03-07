@@ -21,6 +21,8 @@ function init () {
 
         /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
+        brew update
+
         /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/julwrites/tools/master/deploy.py)"
 
         brew install python@2

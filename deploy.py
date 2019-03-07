@@ -2,13 +2,13 @@ import platform
 import webbrowser
 import subprocess
 
-Common = ['git', 'vscode', 'cmake', 'conan', 'nodejs']
-Windows = ['python3', 'cmdermini', 'neovim', 'llvm']
-Darwin = ['python3', 'llvm']
-Debian = ['python3.6', 'python3-pip', 'clang-7', 'lldb-7', 'lld-7']
+Common = ['git', 'cmake', 'conan', 'nodejs']
+Windows = ['python3', 'vscode', 'cmdermini', 'neovim', 'llvm']
+Darwin = ['cask visual-studio-code', 'python3', 'llvm']
+Debian = ['code', 'python3.6', 'python3-pip', 'clang-7', 'lldb-7', 'lld-7']
 RedHat = [
-    'gettext-devel', 'openssl-devel', 'perl-CPAN', 'perl-devel', 'zlib-devel',
-    'python36', 'devtoolset-7', 'llvm-toolset-7'
+    'code', 'gettext-devel', 'openssl-devel', 'perl-CPAN', 'perl-devel',
+    'zlib-devel', 'python36', 'devtoolset-7', 'llvm-toolset-7'
 ]
 
 
@@ -58,7 +58,8 @@ def init():
     if windows():
         format_cmd = 'choco install {} -y'
     elif darwin():
-        format_cmd = 'brew install {}'
+        run('brew tap caskroom/cask')
+        format_cmd = 'brew cask install {}'
     elif debian_dist():
         format_cmd = 'apt-get install {} -y -qq'
     elif redhat_dist():
