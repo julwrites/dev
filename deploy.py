@@ -73,7 +73,7 @@ def init():
     return format_cmd
 
 
-def package():
+def packages():
     package = Common
 
     if windows():
@@ -98,7 +98,7 @@ def package():
 def install():
     format_cmd = init()
 
-    for pkg in package():
+    for pkg in packages():
         for i in range(3):
             if run(format_cmd.format(pkg)) == 0:
                 break
