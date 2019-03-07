@@ -5,7 +5,9 @@
 function admin () {
     echo "$(whoami)"
 
-    [ "$UID" -eq 0 ] || exec sudo ./deploy.sh
+    DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+
+    [ "$UID" -eq 0 ] || exec sudo ./$DIR/deploy.sh
 }
 ################################################################################
 
