@@ -84,12 +84,16 @@ def packages():
         package.extend(Debian)
     elif redhat_dist():
         if redhat():
-            package = ['epel-release'].extend(package)
+            prereq = ['epel-release']
+            prereq.extend(package)
+            package = prereq
         elif centos():
-            package = [
+            prereq = [
                 'centos-release-scl',
                 'https://centos7.iuscommunity.org/ius-release.rpm'
-            ].extend(package)
+            ]
+            prereq.extend(package)
+            package = prereq
         package.extend(RedHat)
 
     return package
