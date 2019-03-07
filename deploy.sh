@@ -52,7 +52,7 @@ function init () {
 function deploy () {
     cd /usr/tmp
 
-    curl -fsSL "https://github.com/julwrites/tools/raw/master/deploy.py" deploy.py
+    curl -fsSL -o deploy.py "https://github.com/julwrites/tools/raw/master/deploy.py"
 
     python deploy.py
 
