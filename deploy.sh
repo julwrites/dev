@@ -23,7 +23,7 @@ function init () {
 
         brew update
 
-        /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/julwrites/tools/master/deploy.py)"
+        /usr/bin/ruby -e "$(curl -fsSL -O deploy.py https://raw.githubusercontent.com/julwrites/tools/master/deploy.py)"
 
         brew install python@2
     elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
