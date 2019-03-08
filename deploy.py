@@ -55,6 +55,7 @@ def run(cmd):
 
 def init():
     format_cmd = ''
+    post_cmd = ''
 
     if windows():
         format_cmd = 'choco install {} -y'
@@ -63,6 +64,7 @@ def init():
 
         run('brew tap caskroom/cask')
         format_cmd = 'brew {} install {}'
+        post_cmd = 'brew link {}'
     elif debian_dist():
         run('apt-get update -y')
         run('apt-get upgrade -y --force-yes -q')
@@ -89,7 +91,7 @@ def init():
 
         format_cmd = 'yum -y install {}'
 
-    return format_cmd
+    return format_cmd, post_cmd
 
 
 def packages(format_cmd):
@@ -111,14 +113,25 @@ def packages(format_cmd):
 
     return package
 
+def post(post_cmd):
+    package = []
+
+    if darwin():
+        package.extend([post_cmd.format(pkg) for pkg in Common])
+        package.extend([post_cmd.format(pkg) for pkg in Darwin])
+
+    return package
 
 def install():
-    format_cmd = init()
+    (format_cmd, post_cmd) = init()
 
     for install_cmd in packages(format_cmd):
         for i in range(3):
             if run(install_cmd) == 0:
                 break
+
+    for post_install_cmd in post(post_cmd):
+        run(post_install_cmd)
 
 
 # webbrowser.open_new('https://tehj.org')
