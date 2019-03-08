@@ -94,7 +94,7 @@ def init():
     return format_cmd, post_cmd
 
 
-def packages(format_cmd):
+def packages():
     package = Common
 
     if windows():
