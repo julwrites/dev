@@ -127,15 +127,6 @@ def format_install(format_cmd, pkg):
     else:
         return format_cmd.format(pkg)
 
-def format_post(post_cmd, pkg):
-    package = []
-
-    if darwin():
-        package.extend([post_cmd.format(pkg) for pkg in Common])
-        package.extend([post_cmd.format(pkg) for pkg in Darwin])
-
-    return package
-
 def install():
     format_cmd, post_cmd = init()
 
@@ -145,7 +136,7 @@ def install():
                 break
 
     for pkg in packages():
-        run(format_post(post_cmd, pkg))
+        run(post_cmd.format(pkg))
 
 
 # webbrowser.open_new('https://tehj.org')
