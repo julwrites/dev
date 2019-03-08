@@ -64,7 +64,7 @@ def init():
 
         run('brew tap caskroom/cask')
         format_cmd = 'brew {} install {}'
-        post_cmd = 'brew link {}'
+        post_cmd = 'brew link --overwrite {}'
     elif debian_dist():
         run('apt-get update -y')
         run('apt-get upgrade -y --force-yes -q')
