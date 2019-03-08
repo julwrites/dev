@@ -132,7 +132,7 @@ def install():
 
     for pkg in packages():
         for i in range(3):
-            if exist(pkg) or run(format_install(format_cmd, pkg)):
+            if exists(pkg) or run(format_install(format_cmd, pkg)):
                 break
 
     for pkg in packages():
