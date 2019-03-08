@@ -4,8 +4,8 @@ import subprocess
 
 Common = ['git', 'cmake', 'conan', 'nodejs', 'slack', 'neovim']
 Windows = [
-    'python3', '7zip.install', 'visualstudio2017buildtools', 'vscode',
-    'cmdermini', 'llvm', 'activeperl', 'miktex', 'xamarin', 'synctrayzor'
+    'python3', '7zip.install', 'windows-sdk-10.0', 'llvm', 'vscode',
+    'cmdermini', 'activeperl', 'miktex', 'xamarin', 'synctrayzor'
 ]
 Darwin = ['python3', 'llvm']
 DarwinCask = ['visual-studio-code']
