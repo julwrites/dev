@@ -57,12 +57,12 @@ def init():
     format_cmd = ''
 
     if windows():
-        format_cmd = 'choco install {0} -y'
+        format_cmd = 'choco install {} -y'
     elif darwin():
         run('xcode-select --install')
 
         run('brew tap caskroom/cask')
-        format_cmd = 'brew {0} install {1}'
+        format_cmd = 'brew {} install {}'
     elif debian_dist():
         run('apt-get update -y')
         run('apt-get upgrade -y --force-yes -q')
@@ -70,48 +70,44 @@ def init():
         run('install -o root -g root -m 644 microsoft.gpg /etc/apt/trusted.gpg.d/')
         run('echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list')
 
-        format_cmd = 'apt-get install {0} -y -q'
+        format_cmd = 'apt-get install {} -y -q'
     elif redhat_dist():
         if redhat():
             run('yum-config-manager --enable rhel-server-rhscl-7-rpms')
             run('subscription-manager repos --enable rhel-7-server-optional-rpms'
                 )
             run('subscription-manager repos --enable rhel-server-rhscl-7-rpms')
+            run('yum install epel-release')
+        if centos():
+            run('yum -y install centos-release-scl')
+            run('yum -y install https://centos7.iuscommunity.org/ius-release.rpm')
 
         run('yum update -y')
         run('yum upgrade -y')
         run('rpm --import https://packages.microsoft.com/keys/microsoft.asc')
         run('echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo')
 
-        format_cmd = 'yum -y install {0}'
+        format_cmd = 'yum -y install {}'
 
     return format_cmd
 
 
 def packages(format_cmd):
-    package = [format_cmd.format(pkg) for pkg in Common]
+        package = []
 
     if windows():
+        package.extend([format_cmd.format(pkg) for pkg in Common])
         package.extend([format_cmd.format(pkg) for pkg in Windows])
     elif darwin():
+        package.extend([format_cmd.format('', pkg) for pkg in Common])
         package.extend([format_cmd.format('', pkg) for pkg in Darwin])
         package.extend([format_cmd.format('cask', pkg) for pkg in DarwinCask])
     elif debian_dist():
+        package.extend([format_cmd.format(pkg) for pkg in Common])
         package.extend([format_cmd.format(pkg) for pkg in Debian])
     elif redhat_dist():
-        if redhat():
-            prereq = ['epel-release']
-            prereq.extend(package)
-            package = prereq
-        elif centos():
-            prereq = [
-                'centos-release-scl',
-                'https://centos7.iuscommunity.org/ius-release.rpm'
-            ]
-            prereq.extend(package)
-            package = prereq
-        package.extend(RedHat)
-        package = [format_cmd.format(pkg) for pkg in package]
+        package.extend([format_cmd.format(pkg) for pkg in Common])
+        package.extend([format_cmd.format(pkg) for pkg in RedHat])
 
     return package
 
