@@ -32,10 +32,14 @@ function init () {
         cd /usr/tmp
 
         if [ -n "$(command -v yum)" ]; then
+            yum clean all
+
             yum upgrade -y
 
             # Skip installing Python, Debian distros have it natively
         elif [ -n "$(command -v apt-get)" ]; then
+            killall dpkg
+
             apt-get upgrade -y --force-yes -qq
 
             apt-get -y install python2.7
