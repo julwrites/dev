@@ -2,8 +2,11 @@ import platform
 import webbrowser
 import subprocess
 
-Common = ['git', 'cmake', 'conan', 'nodejs']
-Windows = ['python3', 'vscode', 'cmdermini', 'neovim', 'llvm']
+Common = ['git', 'cmake', 'conan', 'nodejs', 'slack', 'neovim']
+Windows = [
+    'python3', '7zip.install', 'vscode', 'cmdermini', 'llvm', 'activeperl',
+    'miktex', 'xamarin', 'synctrayzor'
+]
 Darwin = ['python3', 'llvm']
 DarwinCask = ['visual-studio-code']
 Debian = ['code', 'python3.6', 'python3-pip', 'clang-7', 'lldb-7', 'lld-7']
@@ -68,9 +71,12 @@ def init():
     elif debian_dist():
         run('apt-get update -y')
         run('apt-get upgrade -y --force-yes -q')
-        run('curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg')
-        run('install -o root -g root -m 644 microsoft.gpg /etc/apt/trusted.gpg.d/')
-        run('echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list')
+        run('curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg'
+            )
+        run('install -o root -g root -m 644 microsoft.gpg /etc/apt/trusted.gpg.d/'
+            )
+        run('echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
+            )
 
         format_cmd = 'apt-get install {} -y -q'
     elif redhat_dist():
@@ -82,12 +88,14 @@ def init():
             run('yum install epel-release')
         if centos():
             run('yum -y install centos-release-scl')
-            run('yum -y install https://centos7.iuscommunity.org/ius-release.rpm')
+            run('yum -y install https://centos7.iuscommunity.org/ius-release.rpm'
+                )
 
         run('yum update -y')
         run('yum upgrade -y')
         run('rpm --import https://packages.microsoft.com/keys/microsoft.asc')
-        run('echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo')
+        run('echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
+            )
 
         format_cmd = 'yum -y install {}'
 
@@ -109,6 +117,7 @@ def packages():
 
     return package
 
+
 def exists(pkg):
     if windows():
         return False
@@ -121,11 +130,13 @@ def exists(pkg):
 
     return False
 
+
 def format_install(format_cmd, pkg):
     if darwin():
         return format_cmd.format('cask' if (pkg in DarwinCask) else '', pkg)
     else:
         return format_cmd.format(pkg)
+
 
 def install():
     format_cmd, post_cmd = init()
