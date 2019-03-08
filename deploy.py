@@ -50,7 +50,7 @@ def redhat_dist():
 
 
 def run(cmd):
-    return subprocess.call(cmd, shell=True)
+    return subprocess.call(cmd, shell=True) == 0
 
 
 def init():
@@ -132,7 +132,7 @@ def install():
 
     for pkg in packages():
         for i in range(3):
-            if exist(pkg) or run(format_install(format_cmd, pkg) == 0:
+            if exist(pkg) or run(format_install(format_cmd, pkg)):
                 break
 
     for pkg in packages():
