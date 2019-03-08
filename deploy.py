@@ -95,25 +95,39 @@ def init():
 
 
 def packages(format_cmd):
-    package = []
+    package = Common
 
     if windows():
-        package.extend([format_cmd.format(pkg) for pkg in Common])
-        package.extend([format_cmd.format(pkg) for pkg in Windows])
+        package.extend(Windows)
     elif darwin():
-        package.extend([format_cmd.format('', pkg) for pkg in Common])
-        package.extend([format_cmd.format('', pkg) for pkg in Darwin])
-        package.extend([format_cmd.format('cask', pkg) for pkg in DarwinCask])
+        package.extend(Darwin)
+        package.extend(DarwinCask)
     elif debian_dist():
-        package.extend([format_cmd.format(pkg) for pkg in Common])
-        package.extend([format_cmd.format(pkg) for pkg in Debian])
+        package.extend(Debian)
     elif redhat_dist():
-        package.extend([format_cmd.format(pkg) for pkg in Common])
-        package.extend([format_cmd.format(pkg) for pkg in RedHat])
+        package.extend(RedHat)
 
     return package
 
-def post(post_cmd):
+def exists(pkg):
+    if windows():
+        return False
+    elif darwin():
+        return run('brew list {}'.format(pkg))
+    elif debian_dist():
+        return run('apt-cache show {}'.format(pkg))
+    elif redhat_dist():
+        return run('yum list installed {}'.format(pkg))
+
+    return False
+
+def format_install(format_cmd, pkg):
+    if darwin():
+        return format_cmd.format('cask' if (pkg in DarwinCask) else '', pkg)
+    else:
+        return format_cmd.format(pkg)
+
+def format_post(post_cmd, pkg):
     package = []
 
     if darwin():
@@ -123,15 +137,15 @@ def post(post_cmd):
     return package
 
 def install():
-    (format_cmd, post_cmd) = init()
+    format_cmd, post_cmd = init()
 
-    for install_cmd in packages(format_cmd):
+    for pkg in packages():
         for i in range(3):
-            if run(install_cmd) == 0:
+            if exist(pkg) or run(format_install(format_cmd, pkg) == 0:
                 break
 
-    for post_install_cmd in post(post_cmd):
-        run(post_install_cmd)
+    for pkg in packages():
+        run(format_post(post_cmd, pkg))
 
 
 # webbrowser.open_new('https://tehj.org')
