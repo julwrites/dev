@@ -93,7 +93,7 @@ def init():
 
 
 def packages(format_cmd):
-        package = []
+    package = []
 
     if windows():
         package.extend([format_cmd.format(pkg) for pkg in Common])
