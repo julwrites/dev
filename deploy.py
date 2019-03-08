@@ -4,7 +4,8 @@ import subprocess
 
 Common = ['git', 'cmake', 'conan', 'nodejs']
 Windows = ['python3', 'vscode', 'cmdermini', 'neovim', 'llvm']
-Darwin = ['cask visual-studio-code', 'python3', 'llvm']
+Darwin = ['python3', 'llvm']
+DarwinCask = ['visual-studio-code']
 Debian = ['code', 'python3.6', 'python3-pip', 'clang-7', 'lldb-7', 'lld-7']
 RedHat = [
     'code', 'gettext-devel', 'openssl-devel', 'perl-CPAN', 'perl-devel',
@@ -58,8 +59,27 @@ def init():
     if windows():
         format_cmd = 'choco install {} -y'
     elif darwin():
+        run('bash <(curl -s https://raw.githubusercontent.com/monfresh/laptop/master/laptop)'
+
+        run('''
+            xcode-select --install > /dev/null 2>&1
+            if [ 0 == $? ]; do
+                sleep 1
+                osascript <<EOD
+            tell application "System Events"
+                tell process "Install Command Line Developer Tools"
+                    keystroke return
+                    click button "Agree" of window "License Agreement"
+                end tell
+            end tell
+            EOD
+            else
+                echo "Command Line Developer Tools are already installed!"
+            fi 
+        ''')
+
         run('brew tap caskroom/cask')
-        format_cmd = 'brew cask install {}'
+        format_cmd = 'brew {} install {}'
     elif debian_dist():
         run('apt-get update -y')
         run('apt-get upgrade -y --force-yes -q')
@@ -85,15 +105,16 @@ def init():
     return format_cmd
 
 
-def packages():
-    package = Common
+def packages(format_cmd):
+    package = [format_cmd.format(pkg) for pkg in Common]
 
     if windows():
-        package.extend(Windows)
+        package.extend([format_cmd.format(pkg) for pkg in Windows])
     elif darwin():
-        package.extend(Darwin)
+        package.extend([format_cmd.format('', pkg) for pkg in Darwin])
+        package.extend([format_cmd.format('cask', pkg) for pkg in DarwinCask])
     elif debian_dist():
-        package.extend(Debian)
+        package.extend([format_cmd.format(pkg) for pkg in Debian])
     elif redhat_dist():
         if redhat():
             prereq = ['epel-release']
@@ -107,6 +128,7 @@ def packages():
             prereq.extend(package)
             package = prereq
         package.extend(RedHat)
+        package = [format_cmd.format(pkg) for pkg in package]
 
     return package
 
@@ -114,9 +136,9 @@ def packages():
 def install():
     format_cmd = init()
 
-    for pkg in packages():
+    for install_cmd in packages(format_cmd):
         for i in range(3):
-            if run(format_cmd.format(pkg)) == 0:
+            if run(install_cmd) == 0:
                 break
 
 
