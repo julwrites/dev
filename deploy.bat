@@ -43,7 +43,7 @@ IF '%errorlevel%' NEQ '0' (
 
     CALL choco install -y python
 
-    @"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadFile('https://github.com/julwrites/tools/raw/master/deploy.py', 'deploy.py'))" 
+    @"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadFile('https://raw.githubusercontent.com/julwrites/tools/master/deploy.py', 'deploy.py'))" 
 
     CALL python deploy.py
 
