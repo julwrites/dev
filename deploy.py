@@ -61,7 +61,7 @@ def init():
     elif darwin():
         run('bash <(curl -s https://raw.githubusercontent.com/monfresh/laptop/master/laptop)'
 
-        run('xcode-select --install > /dev/null 2>&1')
+        run('xcode-select --install')
 
         run('brew tap caskroom/cask')
         format_cmd = 'brew {} install {}'
