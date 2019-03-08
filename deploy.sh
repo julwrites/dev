@@ -17,7 +17,7 @@ function admin () {
 ################################################################################
 function init () {
     if [ "$(uname)" == "Darwin" ]; then
-        cd /usr/tmp
+        cd /tmp
 
         /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
@@ -29,9 +29,10 @@ function init () {
     elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
         admin
 
-        cd /usr/tmp
+        cd /tmp
 
         if [ -n "$(command -v yum)" ]; then
+
             yum clean all
 
             yum upgrade -y
