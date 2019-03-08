@@ -57,12 +57,12 @@ def init():
     format_cmd = ''
 
     if windows():
-        format_cmd = 'choco install {} -y'
+        format_cmd = 'choco install {0} -y'
     elif darwin():
         run('xcode-select --install')
 
         run('brew tap caskroom/cask')
-        format_cmd = 'brew {} install {}'
+        format_cmd = 'brew {0} install {1}'
     elif debian_dist():
         run('apt-get update -y')
         run('apt-get upgrade -y --force-yes -q')
@@ -70,7 +70,7 @@ def init():
         run('install -o root -g root -m 644 microsoft.gpg /etc/apt/trusted.gpg.d/')
         run('echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list')
 
-        format_cmd = 'apt-get install {} -y -q'
+        format_cmd = 'apt-get install {0} -y -q'
     elif redhat_dist():
         if redhat():
             run('yum-config-manager --enable rhel-server-rhscl-7-rpms')
@@ -83,7 +83,7 @@ def init():
         run('rpm --import https://packages.microsoft.com/keys/microsoft.asc')
         run('echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo')
 
-        format_cmd = 'yum -y install {}'
+        format_cmd = 'yum -y install {0}'
 
     return format_cmd
 
