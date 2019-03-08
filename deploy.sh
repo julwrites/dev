@@ -41,7 +41,7 @@ function init () {
         elif [ -n "$(command -v apt-get)" ]; then
             killall dpkg
 
-            apt-get upgrade -y --force-yes -qq
+            apt-get upgrade -y --force-yes -q
 
             apt-get -y install python2.7
         else
