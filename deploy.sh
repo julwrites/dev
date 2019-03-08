@@ -35,13 +35,9 @@ function init () {
 
             yum clean all
 
-            yum upgrade -y
-
             # Skip installing Python, Debian distros have it natively
         elif [ -n "$(command -v apt-get)" ]; then
             killall dpkg
-
-            apt-get upgrade -y --force-yes -q
 
             apt-get -y install python2.7
         else

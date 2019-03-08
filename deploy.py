@@ -61,13 +61,23 @@ def init():
         run('brew tap caskroom/cask')
         format_cmd = 'brew cask install {}'
     elif debian_dist():
-        format_cmd = 'apt-get install {} -y -qq'
+        run('apt-get update -y')
+        run('apt-get upgrade -y --force-yes -q')
+        run('curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg')
+        run('install -o root -g root -m 644 microsoft.gpg /etc/apt/trusted.gpg.d/')
+        run('echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list')
+
+        format_cmd = 'apt-get install {} -y -q'
     elif redhat_dist():
         if redhat():
             run('yum-config-manager --enable rhel-server-rhscl-7-rpms')
             run('subscription-manager repos --enable rhel-7-server-optional-rpms'
                 )
             run('subscription-manager repos --enable rhel-server-rhscl-7-rpms')
+
+        run('yum upgrade -y')
+        run('rpm --import https://packages.microsoft.com/keys/microsoft.asc')
+        run('echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo')
 
         format_cmd = 'yum -y install {}'
 
