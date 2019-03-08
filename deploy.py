@@ -59,7 +59,7 @@ def init():
     if windows():
         format_cmd = 'choco install {} -y'
     elif darwin():
-        run('bash <(curl -s https://raw.githubusercontent.com/monfresh/laptop/master/laptop)'
+        run('bash <(curl -s https://raw.githubusercontent.com/monfresh/laptop/master/laptop)')
 
         run('xcode-select --install')
 
