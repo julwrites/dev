@@ -9,7 +9,7 @@ Windows = [
 ]
 Darwin = ['python3', 'llvm']
 DarwinCask = ['visual-studio-code']
-Debian = ['python3.6', 'python3-pip', 'clang-7', 'lldb-7', 'lld-7', 'vscode']
+Debian = ['python3.6', 'python3-pip', 'clang-7', 'lldb-7', 'lld-7', 'code']
 RedHat = [
     'code', 'gettext-devel', 'openssl-devel', 'perl-CPAN', 'perl-devel',
     'zlib-devel', 'python36', 'devtoolset-7', 'llvm-toolset-7'
@@ -77,8 +77,9 @@ def init():
             )
         run('install -o root -g root -m 644 microsoft.gpg /etc/apt/trusted.gpg.d/'
             )
-        run('echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
+        run('sh -c \'echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list\''
             )
+        run('install apt-transport-https')
         run('apt-get update -y')
 
         run('rm -rf microsoft.gpg')
