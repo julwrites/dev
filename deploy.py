@@ -62,11 +62,13 @@ def init():
 
     if windows():
         format_cmd = 'choco install {} -y'
+        update_cmd = 'choco upgrade {} -y'
     elif darwin():
         run('xcode-select --install')
 
         run('brew tap caskroom/cask')
         format_cmd = 'brew {} install {}'
+        update_cmd = 'brew upgrade {}'
         post_cmd = 'brew link --overwrite {}'
     elif debian_dist():
         run('apt-get update -y')
@@ -79,6 +81,7 @@ def init():
             )
 
         format_cmd = 'apt-get install {} -y -q'
+        update_cmd = 'apt-get update {} -y -q'
     elif redhat_dist():
         if redhat():
             run('yum-config-manager --enable rhel-server-rhscl-7-rpms')
@@ -92,35 +95,38 @@ def init():
                 )
 
         run('yum update -y')
-        run('yum upgrade -y')
         run('rpm --import https://packages.microsoft.com/keys/microsoft.asc')
         run('echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
             )
 
         format_cmd = 'yum -y install {}'
+        format_cmd = 'yum -y upgrade {}'
 
-    return format_cmd, post_cmd
+    return format_cmd, update_cmd, post_cmd
+
+
+Session = {"installed": [], "updated": [], "failed": []}
 
 
 def packages():
-    package = Common
+    select = Common
 
     if windows():
-        package.extend(Windows)
+        select.extend(Windows)
     elif darwin():
-        package.extend(Darwin)
-        package.extend(DarwinCask)
+        select.extend(Darwin)
+        select.extend(DarwinCask)
     elif debian_dist():
-        package.extend(Debian)
+        select.extend(Debian)
     elif redhat_dist():
-        package.extend(RedHat)
+        select.extend(RedHat)
 
-    return package
+    return select
 
 
 def exists(pkg):
     if windows():
-        return False
+        return run('choco list -lo {}'.format(pkg))
     elif darwin():
         return run('brew list {}'.format(pkg))
     elif debian_dist():
@@ -139,16 +145,33 @@ def format_install(format_cmd, pkg):
 
 
 def install():
-    format_cmd, post_cmd = init()
+    format_cmd, update_cmd, post_cmd = init()
 
     for pkg in packages():
         for i in range(3):
-            if exists(pkg) or run(format_install(format_cmd, pkg)):
+            if exists(pkg):
+                run(update_cmd.format(pkg))
+                Session['updated'].append(pkg)
                 break
+            elif run(format_install(format_cmd, pkg)):
+                Session['installed'].append(pkg)
+                break
+            else:
+                Session['failed'].append(pkg)
 
     for pkg in packages():
         run(post_cmd.format(pkg))
 
 
-# webbrowser.open_new('https://tehj.org')
+def report():
+    print('\n\t+\t'.join(['Installed:'] + Session['installed']))
+    print('\n\t^\t'.join(['Updated:'] + Session['updated']))
+    print('\n\t!\t'.join(['Failed'] + Session['failed']))
+
+    if darwin():
+        print('Please take note that XCode has to be installed separately')
+
+
 install()
+
+report()
