@@ -73,8 +73,8 @@ def init():
         update_cmd = 'brew upgrade {}'
         post_cmd = 'brew link --overwrite {}'
     elif debian_dist():
-        run('sudo wget https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg'
-            )
+        run('sudo wget https://packages.microsoft.com/keys/microsoft.asc')
+        run('cat microsoft.asc | gpg --dearmor > microsoft.gpg')
         run('sudo install -o root -g root -m 644 microsoft.gpg /etc/apt/trusted.gpg.d/'
             )
         run('sudo sh -c \'echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list\''
