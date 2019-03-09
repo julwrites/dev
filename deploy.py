@@ -188,7 +188,12 @@ def report():
  -----------------------------------------------------------------------------------
     """)
 
-    print(''.join(open('README.md').readlines()))
+    print("""
+        ## Mantra
+        1. Development Tools are an essential part of any workflow
+        2. Developers should struggle with code, not tools
+        3. Good tools enable and enhance developers
+    """)
 
 
 install()
