@@ -122,7 +122,6 @@ def packages():
         select.extend(DarwinCask)
     elif debian_dist():
         select.extend(Debian)
-        select.extend(DebianSnap)
     elif redhat_dist():
         select.extend(RedHat)
 
