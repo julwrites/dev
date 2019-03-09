@@ -73,38 +73,38 @@ def init():
         update_cmd = 'brew upgrade {}'
         post_cmd = 'brew link --overwrite {}'
     elif debian_dist():
-        run('curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg'
+        run('sudo wget https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg'
             )
-        run('install -o root -g root -m 644 microsoft.gpg /etc/apt/trusted.gpg.d/'
+        run('sudo install -o root -g root -m 644 microsoft.gpg /etc/apt/trusted.gpg.d/'
             )
-        run('sh -c \'echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list\''
+        run('sudo sh -c \'echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list\''
             )
-        run('install apt-transport-https')
-        run('apt-get update -y')
+        run('sudo install apt-transport-https')
+        run('sudo apt-get update -y')
 
-        run('rm -rf microsoft.gpg')
-
-        format_cmd = 'apt-get install {} -y -q'
-        update_cmd = 'apt-get update {} -y -q'
+        format_cmd = 'sudo apt-get install {} -y -q'
+        update_cmd = 'sudo apt-get update {} -y -q'
     elif redhat_dist():
         if redhat():
-            run('yum-config-manager --enable rhel-server-rhscl-7-rpms')
-            run('subscription-manager repos --enable rhel-7-server-optional-rpms'
+            run('sudo yum-config-manager --enable rhel-server-rhscl-7-rpms')
+            run('sudo subscription-manager repos --enable rhel-7-server-optional-rpms'
                 )
-            run('subscription-manager repos --enable rhel-server-rhscl-7-rpms')
-            run('yum install epel-release')
+            run('sudo subscription-manager repos --enable rhel-server-rhscl-7-rpms'
+                )
+            run('sudo yum install epel-release')
         if centos():
-            run('yum -y install centos-release-scl')
-            run('yum -y install https://centos7.iuscommunity.org/ius-release.rpm'
+            run('sudo yum -y install centos-release-scl')
+            run('sudo yum -y install https://centos7.iuscommunity.org/ius-release.rpm'
                 )
 
-        run('rpm --import https://packages.microsoft.com/keys/microsoft.asc')
-        run('echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
+        run('sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc'
             )
-        run('yum update -y')
+        run('sudo echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
+            )
+        run('sudo yum update -y')
 
-        format_cmd = 'yum -y install {}'
-        format_cmd = 'yum -y upgrade {}'
+        format_cmd = 'sudo yum -y install {}'
+        format_cmd = 'sudo yum -y upgrade {}'
 
     return format_cmd, update_cmd, post_cmd
 
@@ -134,9 +134,9 @@ def exists(pkg):
     elif darwin():
         return run('brew list {}'.format(pkg))
     elif debian_dist():
-        return run('apt-cache show {}'.format(pkg))
+        return run('sudo apt-cache show {}'.format(pkg))
     elif redhat_dist():
-        return run('yum list installed {}'.format(pkg))
+        return run('sudo yum list installed {}'.format(pkg))
 
     return False
 

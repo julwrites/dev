@@ -1,18 +1,5 @@
 #!/bin/bash
 
-# BashScriptAdmin
-################################################################################
-function admin () {
-    echo "$(whoami)"
-
-    DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-
-    if [ "$UID" -ne 0 ]; then
-        cd $DIR && exec sudo ./deploy.sh
-    fi
-}
-################################################################################
-
 # BashScriptPlatform
 ################################################################################
 function init () {
@@ -27,19 +14,17 @@ function init () {
 
         brew install python@2
     elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
-        admin
-
         cd /tmp
 
         if [ -n "$(command -v yum)" ]; then
 
-            yum clean all
+            sudo yum clean all
 
             # Skip installing Python, Debian distros have it natively
         elif [ -n "$(command -v apt-get)" ]; then
-            killall dpkg
+            sudo killall dpkg
 
-            apt-get -y install python2.7
+            sudo apt-get -y install python2.7
         else
             echo Could not find package manager
         fi
@@ -56,11 +41,11 @@ function init () {
 function deploy () {
     init
 
-    chmod 777 deploy.py
+    sudo chmod 777 deploy.py
 
     python deploy.py
 
-    rm -rf deploy.py
+    sudo rm -rf deploy.py
 }
 ################################################################################
 
