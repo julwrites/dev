@@ -114,8 +114,7 @@ Session = {"installed": [], "updated": [], "failed": []}
 
 
 def merge(orig, add):
-    out = orig
-    return [p for p in add if p not in orig]
+    return orig + [p for p in add if p not in orig]
 
 
 def packages():
