@@ -133,7 +133,10 @@ def exists(pkg):
     if windows():
         return run('choco list -lo {}'.format(pkg))
     elif darwin():
-        return run('brew list {}'.format(pkg))
+        if pkg in DarwinCask:
+            return pkg in run('brew cask list')
+        else:
+            return run('brew list {}'.format(pkg))
     elif debian_dist():
         return run('sudo apt-cache show {}'.format(pkg))
     elif redhat_dist():
