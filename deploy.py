@@ -9,8 +9,7 @@ Windows = [
 ]
 Darwin = ['python3', 'llvm']
 DarwinCask = ['visual-studio-code']
-Debian = ['python3.6', 'python3-pip', 'clang-7', 'lldb-7', 'lld-7']
-DebianSnap = ['vscode']
+Debian = ['python3.6', 'python3-pip', 'clang-7', 'lldb-7', 'lld-7', 'vscode']
 RedHat = [
     'code', 'gettext-devel', 'openssl-devel', 'perl-CPAN', 'perl-devel',
     'zlib-devel', 'python36', 'devtoolset-7', 'llvm-toolset-7'
@@ -81,6 +80,8 @@ def init():
         run('echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
             )
         run('apt-get update -y')
+
+        run('rm -rf microsoft.gpg')
 
         format_cmd = 'apt-get install {} -y -q'
         update_cmd = 'apt-get update {} -y -q'
