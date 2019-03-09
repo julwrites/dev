@@ -69,18 +69,18 @@ def init():
         run('xcode-select --install')
 
         run('brew tap caskroom/cask')
+
         format_cmd = 'brew {} install {}'
         update_cmd = 'brew upgrade {}'
         post_cmd = 'brew link --overwrite {}'
     elif debian_dist():
-        run('apt-get update -y')
-        run('apt-get upgrade -y --force-yes -q')
         run('curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg'
             )
         run('install -o root -g root -m 644 microsoft.gpg /etc/apt/trusted.gpg.d/'
             )
         run('echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
             )
+        run('apt-get update -y')
 
         format_cmd = 'apt-get install {} -y -q'
         update_cmd = 'apt-get update {} -y -q'
@@ -96,10 +96,10 @@ def init():
             run('yum -y install https://centos7.iuscommunity.org/ius-release.rpm'
                 )
 
-        run('yum update -y')
         run('rpm --import https://packages.microsoft.com/keys/microsoft.asc')
         run('echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
             )
+        run('yum update -y')
 
         format_cmd = 'yum -y install {}'
         format_cmd = 'yum -y upgrade {}'
