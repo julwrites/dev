@@ -9,7 +9,8 @@ Windows = [
 ]
 Darwin = ['python3', 'llvm']
 DarwinCask = ['visual-studio-code']
-Debian = ['code', 'python3.6', 'python3-pip', 'clang-7', 'lldb-7', 'lld-7']
+Debian = ['python3.6', 'python3-pip', 'clang-7', 'lldb-7', 'lld-7']
+DebianSnap = ['vscode']
 RedHat = [
     'code', 'gettext-devel', 'openssl-devel', 'perl-CPAN', 'perl-devel',
     'zlib-devel', 'python36', 'devtoolset-7', 'llvm-toolset-7'
@@ -58,6 +59,7 @@ def run(cmd):
 
 def init():
     format_cmd = ''
+    update_cmd = ''
     post_cmd = ''
 
     if windows():
@@ -118,6 +120,7 @@ def packages():
         select.extend(DarwinCask)
     elif debian_dist():
         select.extend(Debian)
+        select.extend(DebianSnap)
     elif redhat_dist():
         select.extend(RedHat)
 
@@ -154,9 +157,11 @@ def install():
                 Session['updated'].append(pkg)
                 break
             elif run(format_install(format_cmd, pkg)):
+                if pkg in Session['failed']:
+                    Session['failed'].remove(pkg)
                 Session['installed'].append(pkg)
                 break
-            else:
+            elif not pkg in Session['failed']:
                 Session['failed'].append(pkg)
 
     for pkg in packages():
