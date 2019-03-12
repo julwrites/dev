@@ -4,11 +4,12 @@ import subprocess
 
 Common = ['git', 'cmake', 'conan', 'nodejs', 'slack', 'neovim']
 Windows = [
-    'python3', '7zip.install', 'windows-sdk-10.0', 'llvm', 'vscode',
-    'cmdermini', 'activeperl', 'miktex', 'xamarin', 'synctrayzor'
+    'python3', '7zip.install', 'visualstudio2017buildtools',
+    'visualstudio2017-workload-vctools', 'llvm', 'vscode', 'cmdermini',
+    'activeperl', 'miktex', 'xamarin', 'synctrayzor'
 ]
 Darwin = ['python3', 'llvm']
-DarwinCask = ['visual-studio-code']
+DarwinCask = ['slack', 'visual-studio-code']
 Debian = ['python3.6', 'python3-pip', 'clang-7', 'lldb-7', 'lld-7', 'code']
 RedHat = [
     'code', 'gettext-devel', 'openssl-devel', 'perl-CPAN', 'perl-devel',
@@ -112,18 +113,22 @@ def init():
 Session = {"installed": [], "updated": [], "failed": []}
 
 
+def merge(orig, add):
+    return orig + [p for p in add if p not in orig]
+
+
 def packages():
     select = Common
 
     if windows():
-        select.extend(Windows)
+        select = merge(select, Windows)
     elif darwin():
-        select.extend(Darwin)
-        select.extend(DarwinCask)
+        select = merge(select, Darwin)
+        select = merge(select, DarwinCask)
     elif debian_dist():
-        select.extend(Debian)
+        select = merge(select, Debian)
     elif redhat_dist():
-        select.extend(RedHat)
+        select = merge(select, RedHat)
 
     return select
 
@@ -132,7 +137,8 @@ def exists(pkg):
     if windows():
         return run('choco list -lo {}'.format(pkg))
     elif darwin():
-        return run('brew list {}'.format(pkg))
+        return run('brew {} list {}'.format(
+            'cask' if pkg in DarwinCask else '', pkg))
     elif debian_dist():
         return run('sudo apt-cache show {}'.format(pkg))
     elif redhat_dist():
@@ -188,7 +194,12 @@ def report():
  -----------------------------------------------------------------------------------
     """)
 
-    print(''.join(open('README.md').readlines()))
+    print("""
+        ## Mantra
+        1. Development Tools are an essential part of any workflow
+        2. Developers should struggle with code, not tools
+        3. Good tools enable and enhance developers
+    """)
 
 
 install()
