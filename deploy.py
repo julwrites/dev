@@ -2,6 +2,8 @@ import platform
 import webbrowser
 import subprocess
 
+################################################################################
+
 Common = ['git', 'cmake', 'conan', 'nodejs', 'slack', 'neovim']
 Windows = [
     'python3', '7zip.install', 'visualstudio2017buildtools',
@@ -15,6 +17,8 @@ RedHat = [
     'code', 'gettext-devel', 'openssl-devel', 'perl-CPAN', 'perl-devel',
     'zlib-devel', 'python36', 'devtoolset-7', 'llvm-toolset-7'
 ]
+
+################################################################################
 
 
 def windows():
@@ -55,6 +59,9 @@ def redhat_dist():
 
 def run(cmd):
     return subprocess.call(cmd, shell=True) == 0
+
+
+################################################################################
 
 
 def init():
@@ -175,6 +182,9 @@ def install():
         run(post_cmd.format(pkg))
 
 
+################################################################################
+
+
 def report():
     print('\n\t+\t'.join(['Installed:'] + Session['installed']))
     print('\n\t^\t'.join(['Updated:'] + Session['updated']))
@@ -201,6 +211,8 @@ def report():
         3. Good tools enable and enhance developers
     """)
 
+
+################################################################################
 
 install()
 
