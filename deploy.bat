@@ -39,6 +39,18 @@ IF '%errorlevel%' NEQ '0' (
     CD /D "%~dp0"
 :--------------------------------------    
 
+:: BatchScriptProxy
+:--------------------------------------    
+:disableproxy
+    SET TMP_HTTP_PROXY=%HTTP_PROXY%
+    SET TMP_HTTPS_PROXY=%HTTPS_PROXY%
+    SET TMP_NO_PROXY=%NO_PROXY%
+
+    SET HTTP_PROXY=
+    SET HTTPS_PROXY=
+    SET NO_PROXY=
+:--------------------------------------    
+
 :: BatchScriptDeploy
 :--------------------------------------    
 :deploy
@@ -58,6 +70,18 @@ IF '%errorlevel%' NEQ '0' (
 
     DEL deploy.py
 
-    pause
+:: BatchScriptProxy
+:--------------------------------------    
+:restoreproxy
+    SET HTTP_PROXY=%TMP_HTTP_PROXY%
+    SET HTTPS_PROXY=%TMP_HTTPS_PROXY%
+    SET NO_PROXY=%TMP_NO_PROXY%
 
-    EXIT /B
+    SET TMP_HTTP_PROXY=
+    SET TMP_HTTPS_PROXY=
+    SET TMP_NO_PROXY=
+:--------------------------------------    
+
+pause
+
+EXIT /B
