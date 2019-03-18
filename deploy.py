@@ -4,7 +4,21 @@ import subprocess
 
 ################################################################################
 
-Common = ['git', 'cmake', 'conan', 'nodejs', 'slack', 'neovim']
+Common = [
+    'git',
+    'cmake',
+    'conan',
+    'nodejs',
+    'slack',
+    'neovim',
+    # Fonts
+    'iosevka',
+    'Monoid',
+    'Hasklig',
+    'Fixedsys Excelsior',
+    'DejaVu Sans Code',
+    'Fira Code'
+]
 Windows = [
     'python3', '7zip.install', 'visualstudio2017buildtools',
     'visualstudio2017-workload-vctools', 'llvm', 'vscode', 'cmdermini',
