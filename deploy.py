@@ -5,31 +5,77 @@ import subprocess
 ################################################################################
 
 Common = [
+    # Dev Tools
     'git',
     'cmake',
     'conan',
     'nodejs',
+    # Common Tools
     'slack',
-    'neovim',
-    # Fonts
-    'iosevka',
-    'Monoid',
-    'Hasklig',
-    'Fixedsys Excelsior',
-    'DejaVu Sans Code',
-    'Fira Code'
+    'neovim'
 ]
+
 Windows = [
-    'python3', '7zip.install', 'visualstudio2017buildtools',
-    'visualstudio2017-workload-vctools', 'llvm', 'vscode', 'cmdermini',
-    'activeperl', 'miktex', 'xamarin', 'synctrayzor'
+    # Dev Tools
+    'python3',
+    'visualstudio2017buildtools',
+    'visualstudio2017-workload-vctools',
+    'llvm',
+    'vscode',
+    'activeperl',
+    'xamarin',
+    # Common Tools
+    '7zip.install',
+    'cmdermini',
+    'miktex',
+    'synctrayzor'
+    # Fonts
+    'Hasklig',
+    'FiraCode'
 ]
-Darwin = ['python3', 'llvm']
-DarwinCask = ['slack', 'visual-studio-code']
-Debian = ['python3.6', 'python3-pip', 'clang-7', 'lldb-7', 'lld-7', 'code']
+
+Darwin = [
+    # Dev Tools
+    'python3',
+    'llvm'
+]
+
+DarwinCask = [
+    # Common Tools
+    'slack',
+    # Dev Tools
+    'visual-studio-code',
+    # Fonts
+    'font-hasklig',
+    'font-fira-code',
+    'font-iosevka'
+]
+
+Debian = [
+    # Dev Tools
+    'python3.6',
+    'python3-pip',
+    'clang-7',
+    'lldb-7',
+    'lld-7',
+    'code',
+    # Fonts
+    'fonts-firacode',
+    'fonts-iosevka',
+    'fonts-hasklig'
+]
+
 RedHat = [
-    'code', 'gettext-devel', 'openssl-devel', 'perl-CPAN', 'perl-devel',
-    'zlib-devel', 'python36', 'devtoolset-7', 'llvm-toolset-7'
+    # Dev Tools
+    'code',
+    'gettext-devel',
+    'openssl-devel',
+    'perl-CPAN',
+    'perl-devel',
+    'zlib-devel',
+    'python36',
+    'devtoolset-7',
+    'llvm-toolset-7'
 ]
 
 ################################################################################
