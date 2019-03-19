@@ -173,7 +173,7 @@ def merge(orig, add):
     return orig + [p for p in add if p not in orig]
 
 
-def packages():
+def pkgmgr_pkg():
     select = Common
 
     if windows():
@@ -187,6 +187,12 @@ def packages():
         select = merge(select, RedHat)
 
     return select
+
+def python_pkg():
+    select = Pip
+
+    return select
+
 
 def pkgmgr_cmd():
     install_cmd = ''
@@ -239,8 +245,8 @@ def format_install(format_cmd, pkg):
         return format_cmd.format(pkg)
 
 
-def install(install_cmd, update_cmd, post_cmd):
-    for pkg in packages():
+def install(install_cmd, update_cmd, post_cmd, packages):
+    for pkg in packages:
         for i in range(3):
             if exists(pkg):
                 run(update_cmd.format(pkg))
@@ -254,15 +260,19 @@ def install(install_cmd, update_cmd, post_cmd):
             elif not pkg in Session['failed']:
                 Session['failed'].append(pkg)
 
-    for pkg in packages():
+    for pkg in packages:
         run(post_cmd.format(pkg))
 
 def deploy():
     init()
 
-    install(pkgmgr_cmd())
+    install_cmd, update_cmd, post_cmd = pkgmgr_cmd()
+    packages = pkgmgr_pkg()
+    install(install_cmd, update_cmd, post_cmd, packages)
 
-    install(python_cmd())
+    install_cmd, update_cmd, post_cmd = python_cmd()
+    packages = python_pkg()
+    install(install_cmd, update_cmd, post_cmd, packages)
 
 
 ################################################################################
@@ -297,6 +307,6 @@ def report():
 
 ################################################################################
 
-install()
+deploy()
 
 report()
