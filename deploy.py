@@ -59,6 +59,7 @@ Debian = [
     # Dev Tools
     'python3.6',
     'python3-pip',
+    'make',
     'clang-7',
     'lldb-7',
     'lld-7',
