@@ -200,41 +200,32 @@ def pkgmgr_cmd():
 
     if windows():
         install_cmd = 'choco install {} -y'
+        check_cmd = 'choco list -lo {}'
         update_cmd = 'choco upgrade {} -y'
     elif darwin():
         install_cmd = 'brew {} install {}'
+        check_cmd = 'brew {} list {}'
         update_cmd = 'brew upgrade {}'
         post_cmd = 'brew link --overwrite {}'
     elif debian_dist():
         install_cmd = 'sudo apt-get install {} -y -q'
+        check_cmd = 'sudo apt-cache show {}'
         update_cmd = 'sudo apt-get update {} -y -q'
     elif redhat_dist():
         install_cmd = 'sudo yum -y install {}'
-        install_cmd = 'sudo yum -y upgrade {}'
+        check_cmd = 'sudo yum list installed {}'
+        update_cmd = 'sudo yum -y upgrade {}'
 
-    return install_cmd, update_cmd, post_cmd
+    return install_cmd, check_cmd, update_cmd, post_cmd
 
 
 def python_cmd():
     install_cmd = 'pip -y install {}'
+    check_cmd = 'pip list {}'
     update_cmd = 'pip -y update {}'
     post_cmd = ''
 
     return install_cmd, update_cmd, post_cmd
-
-
-def exists(pkg):
-    if windows():
-        return run('choco list -lo {}'.format(pkg))
-    elif darwin():
-        return run('brew {} list {}'.format(
-            'cask' if pkg in DarwinCask else '', pkg))
-    elif debian_dist():
-        return run('sudo apt-cache show {}'.format(pkg))
-    elif redhat_dist():
-        return run('sudo yum list installed {}'.format(pkg))
-
-    return False
 
 
 def format_install(format_cmd, pkg):
@@ -244,10 +235,17 @@ def format_install(format_cmd, pkg):
         return format_cmd.format(pkg)
 
 
-def install(install_cmd, update_cmd, post_cmd, packages):
+def format_check(check_cmd, pkg):
+    if darwin():
+        return check_cmd.format('cask' if pkg in DarwinCask else '', pkg)
+    else:
+        return check_cmd.format(pkg)
+
+
+def install(install_cmd, check_cmd, update_cmd, post_cmd, packages):
     for pkg in packages:
         for i in range(3):
-            if exists(pkg):
+            if run(format_check.format(pkg)):
                 run(update_cmd.format(pkg))
                 Session['updated'].append(pkg)
                 break
@@ -266,11 +264,11 @@ def install(install_cmd, update_cmd, post_cmd, packages):
 def deploy():
     init()
 
-    install_cmd, update_cmd, post_cmd = pkgmgr_cmd()
+    install_cmd, check_cmd, update_cmd, post_cmd = pkgmgr_cmd()
     packages = pkgmgr_pkg()
     install(install_cmd, update_cmd, post_cmd, packages)
 
-    install_cmd, update_cmd, post_cmd = python_cmd()
+    install_cmd, check_cmd, update_cmd, post_cmd = python_cmd()
     packages = python_pkg()
     install(install_cmd, update_cmd, post_cmd, packages)
 
