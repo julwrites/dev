@@ -131,7 +131,7 @@ def run(cmd):
 
 def init():
     if windows():
-        # Do nothing
+        run('choco upgrade -y')
     elif darwin():
         run('xcode-select --install')
 
