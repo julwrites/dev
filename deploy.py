@@ -122,6 +122,7 @@ def redhat_dist():
 
 
 def run(cmd):
+    print('calling: ' + cmd)
     return subprocess.call(cmd, shell=True) == 0
 
 
@@ -220,9 +221,9 @@ def pkgmgr_cmd():
 
 
 def python_cmd():
-    install_cmd = 'pip install {}'
-    check_cmd = 'pip list {}'
-    update_cmd = 'pip install {}'
+    install_cmd = 'pip install {} -q'
+    check_cmd = 'pip list {} -q'
+    update_cmd = 'pip install {} -q'
     post_cmd = ''
 
     return install_cmd, check_cmd, update_cmd, post_cmd
