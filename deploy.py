@@ -225,7 +225,7 @@ def python_cmd():
     update_cmd = 'pip -y update {}'
     post_cmd = ''
 
-    return install_cmd, update_cmd, post_cmd
+    return install_cmd, check_cmd, update_cmd, post_cmd
 
 
 def format_install(format_cmd, pkg):
@@ -245,7 +245,7 @@ def format_check(check_cmd, pkg):
 def install(install_cmd, check_cmd, update_cmd, post_cmd, packages):
     for pkg in packages:
         for i in range(3):
-            if run(format_check.format(pkg)):
+            if run(format_check.format(check_cmd, pkg)):
                 run(update_cmd.format(pkg))
                 Session['updated'].append(pkg)
                 break
