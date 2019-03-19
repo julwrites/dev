@@ -220,9 +220,9 @@ def pkgmgr_cmd():
 
 
 def python_cmd():
-    install_cmd = 'pip install {} -y'
+    install_cmd = 'pip install {}'
     check_cmd = 'pip list {}'
-    update_cmd = 'pip install {} -y'
+    update_cmd = 'pip install {}'
     post_cmd = ''
 
     return install_cmd, check_cmd, update_cmd, post_cmd
