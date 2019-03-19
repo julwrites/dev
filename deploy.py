@@ -244,7 +244,7 @@ def format_check(check_cmd, pkg):
 
 def install(install_cmd, check_cmd, update_cmd, post_cmd, packages):
     for pkg in packages:
-        for i in range(3):
+        for i in range(2):
             if run(format_check(check_cmd, pkg)):
                 run(update_cmd.format(pkg))
                 Session['updated'].append(pkg)
