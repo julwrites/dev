@@ -60,6 +60,7 @@ Debian = [
     'python3.6',
     'python3-pip',
     'make',
+    'gcc',
     'clang-7',
     'lldb-7',
     'lld-7',
