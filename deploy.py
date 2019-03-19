@@ -4,11 +4,15 @@ import subprocess
 
 ################################################################################
 
+# Python specific tools
+Pip = [
+    'cmake'
+    'conan'
+]
+
 Common = [
     # Dev Tools
     'git',
-    'cmake',
-    'conan',
     'nodejs',
     # Common Tools
     'slack',
@@ -74,6 +78,7 @@ RedHat = [
     'perl-devel',
     'zlib-devel',
     'python36',
+    'python-pip',
     'devtoolset-7',
     'llvm-toolset-7'
 ]
@@ -125,21 +130,12 @@ def run(cmd):
 
 
 def init():
-    format_cmd = ''
-    update_cmd = ''
-    post_cmd = ''
-
     if windows():
-        format_cmd = 'choco install {} -y'
-        update_cmd = 'choco upgrade {} -y'
+        # Do nothing
     elif darwin():
         run('xcode-select --install')
 
         run('brew tap caskroom/cask')
-
-        format_cmd = 'brew {} install {}'
-        update_cmd = 'brew upgrade {}'
-        post_cmd = 'brew link --overwrite {}'
     elif debian_dist():
         run('wget https://packages.microsoft.com/keys/microsoft.asc')
         run('cat microsoft.asc | gpg --dearmor > microsoft.gpg')
@@ -149,9 +145,6 @@ def init():
             )
         run('sudo apt-get install apt-transport-https')
         run('sudo apt-get update -y')
-
-        format_cmd = 'sudo apt-get install {} -y -q'
-        update_cmd = 'sudo apt-get update {} -y -q'
     elif redhat_dist():
         if redhat():
             run('sudo yum-config-manager --enable rhel-server-rhscl-7-rpms')
@@ -171,10 +164,6 @@ def init():
             )
         run('sudo yum update -y')
 
-        format_cmd = 'sudo yum -y install {}'
-        format_cmd = 'sudo yum -y upgrade {}'
-
-    return format_cmd, update_cmd, post_cmd
 
 
 Session = {"installed": [], "updated": [], "failed": []}
@@ -199,6 +188,35 @@ def packages():
 
     return select
 
+def pkgmgr_cmd():
+    install_cmd = ''
+    update_cmd = ''
+    post_cmd = ''
+
+    if windows(): 
+        install_cmd = 'choco install {} -y'
+        update_cmd = 'choco upgrade {} -y'
+    elif darwin():
+        install_cmd = 'brew {} install {}'
+        update_cmd = 'brew upgrade {}'
+        post_cmd = 'brew link --overwrite {}'
+    elif debian_dist():
+        install_cmd = 'sudo apt-get install {} -y -q'
+        update_cmd = 'sudo apt-get update {} -y -q'
+    elif redhat_dist():
+        install_cmd = 'sudo yum -y install {}'
+        install_cmd = 'sudo yum -y upgrade {}'
+
+    return install_cmd, update_cmd, post_cmd
+
+def python_cmd():
+    install_cmd = 'pip -y install {}'
+    update_cmd = 'pip -y update {}'
+    post_cmd = ''
+
+    return install_cmd, update_cmd, post_cmd
+
+
 
 def exists(pkg):
     if windows():
@@ -221,16 +239,14 @@ def format_install(format_cmd, pkg):
         return format_cmd.format(pkg)
 
 
-def install():
-    format_cmd, update_cmd, post_cmd = init()
-
+def install(install_cmd, update_cmd, post_cmd):
     for pkg in packages():
         for i in range(3):
             if exists(pkg):
                 run(update_cmd.format(pkg))
                 Session['updated'].append(pkg)
                 break
-            elif run(format_install(format_cmd, pkg)):
+            elif run(format_install(install_cmd, pkg)):
                 if pkg in Session['failed']:
                     Session['failed'].remove(pkg)
                 Session['installed'].append(pkg)
@@ -240,6 +256,13 @@ def install():
 
     for pkg in packages():
         run(post_cmd.format(pkg))
+
+def deploy():
+    init()
+
+    install(pkgmgr_cmd())
+
+    install(python_cmd())
 
 
 ################################################################################
