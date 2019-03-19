@@ -266,11 +266,11 @@ def deploy():
 
     install_cmd, check_cmd, update_cmd, post_cmd = pkgmgr_cmd()
     packages = pkgmgr_pkg()
-    install(install_cmd, update_cmd, post_cmd, packages)
+    install(install_cmd, check_cmd, update_cmd, post_cmd, packages)
 
     install_cmd, check_cmd, update_cmd, post_cmd = python_cmd()
     packages = python_pkg()
-    install(install_cmd, update_cmd, post_cmd, packages)
+    install(install_cmd, check_cmd, update_cmd, post_cmd, packages)
 
 
 ################################################################################
