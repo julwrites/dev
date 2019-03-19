@@ -5,10 +5,7 @@ import subprocess
 ################################################################################
 
 # Python specific tools
-Pip = [
-    'cmake'
-    'conan'
-]
+Pip = ['conan', 'cmake', 'ninja', 'lizard']
 
 Common = [
     # Dev Tools
@@ -167,7 +164,6 @@ def init():
         run('sudo yum update -y')
 
 
-
 Session = {"installed": [], "updated": [], "failed": []}
 
 
@@ -190,6 +186,7 @@ def pkgmgr_pkg():
 
     return select
 
+
 def python_pkg():
     select = Pip
 
@@ -201,7 +198,7 @@ def pkgmgr_cmd():
     update_cmd = ''
     post_cmd = ''
 
-    if windows(): 
+    if windows():
         install_cmd = 'choco install {} -y'
         update_cmd = 'choco upgrade {} -y'
     elif darwin():
@@ -217,13 +214,13 @@ def pkgmgr_cmd():
 
     return install_cmd, update_cmd, post_cmd
 
+
 def python_cmd():
     install_cmd = 'pip -y install {}'
     update_cmd = 'pip -y update {}'
     post_cmd = ''
 
     return install_cmd, update_cmd, post_cmd
-
 
 
 def exists(pkg):
@@ -264,6 +261,7 @@ def install(install_cmd, update_cmd, post_cmd, packages):
 
     for pkg in packages:
         run(post_cmd.format(pkg))
+
 
 def deploy():
     init()
