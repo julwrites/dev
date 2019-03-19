@@ -58,7 +58,17 @@ function deploy () {
 
     sudo chmod 777 deploy.py
 
-    python deploy.py
+    if [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
+        if [ -n "$(command -v python)" ]; then
+            python deploy.py
+        elif [ -n "$(command -v python2)" ]; then
+            python2 deploy.py
+        elif [ -n "$(command -v python3)" ]; then
+            python3 deploy.py
+        else
+            echo Could not find python
+        fi
+    fi
 
     sudo rm -rf deploy.py
 }
