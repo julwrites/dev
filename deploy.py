@@ -62,7 +62,7 @@ Debian = [
     'clang-7',
     'lldb-7',
     'lld-7',
-    'code',
+    'visual-studio-code',
     # Fonts
     'fonts-firacode',
     'fonts-iosevka',
