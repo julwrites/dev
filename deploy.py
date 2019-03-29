@@ -246,18 +246,17 @@ def format_check(check_cmd, pkg):
 
 def install(install_cmd, check_cmd, update_cmd, post_cmd, packages):
     for pkg in packages:
-        for i in range(2):
-            if run(format_check(check_cmd, pkg)):
-                run(update_cmd.format(pkg))
-                Session['updated'].append(pkg)
-                break
-            elif run(format_install(install_cmd, pkg)):
-                if pkg in Session['failed']:
-                    Session['failed'].remove(pkg)
-                Session['installed'].append(pkg)
-                break
-            elif not pkg in Session['failed']:
-                Session['failed'].append(pkg)
+        if run(format_check(check_cmd, pkg)):
+            run(update_cmd.format(pkg))
+            Session['updated'].append(pkg)
+            break
+        elif run(format_install(install_cmd, pkg)):
+            if pkg in Session['failed']:
+                Session['failed'].remove(pkg)
+            Session['installed'].append(pkg)
+            break
+        elif not pkg in Session['failed']:
+            Session['failed'].append(pkg)
 
     for pkg in packages:
         run(post_cmd.format(pkg))
