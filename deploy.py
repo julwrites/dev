@@ -136,6 +136,7 @@ def init():
         run('xcode-select --install')
 
         run('brew tap caskroom/cask')
+        run('brew tap caskroom/fonts')
     elif debian_dist():
         run('wget https://packages.microsoft.com/keys/microsoft.asc')
         run('cat microsoft.asc | gpg --dearmor > microsoft.gpg')
