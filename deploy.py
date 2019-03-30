@@ -85,6 +85,10 @@ RedHat = [
 ################################################################################
 
 
+def match(platform, candidate):
+    return platform.find(candidate) != -1
+
+
 def windows():
     return 'Windows' in platform.uname()[0]
 
@@ -98,27 +102,27 @@ def linux():
 
 
 def debian():
-    return linux() and 'Debian' in platform.linux_distribution()[0]
+    return linux() and match(platform.linux_distribution()[0], 'Debian')
 
 
 def ubuntu():
-    return linux() and 'Ubuntu' in platform.linux_distribution()[0]
+    return linux() and match(platform.linux_distribution()[0], 'Ubuntu')
 
 
 def debian_dist():
-    return linux() and (debian() or ubuntu())
+    return debian() or ubuntu()
 
 
 def redhat():
-    return linux() and 'Red Hat' in platform.linux_distribution()[0]
+    return linux() and match(platform.linux_distribution()[0], 'Red Hat')
 
 
 def centos():
-    return linux() and 'CentOS' in platform.linux_distribution()[0]
+    return linux() and match(platform.linux_distribution()[0], 'CentOS')
 
 
 def redhat_dist():
-    return linux() and (redhat() or centos())
+    return redhat() or centos()
 
 
 def run(cmd):
@@ -149,6 +153,21 @@ def init():
     elif redhat_dist():
         if redhat():
             run('sudo subscription-manager attach --auto')
+
+            run('sudo yum install -y gcc openssl-devel bzip2-devel')
+            run('wget https://www.python.org/ftp/python/2.7.15/Python-2.7.15.tgz'
+                )
+            run('tar xzf Python-2.7.15.tgz')
+            run('cd Python-2.7.15')
+            run('./configure --enable-optimizations')
+            run('make altinstall')
+            run('cd ..')
+            run('curl "https://bootstrap.pypa.io/get-pip.py" -o "get-pip.py"')
+            run('python get-pip.py')
+            run('rm -rf Python-2.7.15*')
+            run('rm -rf get-pip.py')
+            run('export PATH=${PATH}:${HOME}/usr/bin')
+
             run('sudo yum-config-manager --enable rhel-server-rhscl-7-rpms')
             run('sudo subscription-manager repos --enable rhel-7-server-optional-rpms'
                 )
@@ -171,7 +190,8 @@ Session = {"installed": [], "updated": [], "failed": []}
 
 
 def merge(orig, add):
-    return orig + [p for p in add if p not in orig]
+    orig.extend([p for p in add if p not in orig])
+    return orig
 
 
 def pkgmgr_pkg():
