@@ -152,22 +152,6 @@ def init():
         run('sudo apt-get update -y')
     elif redhat_dist():
         if redhat():
-            run('sudo subscription-manager attach --auto')
-
-            run('sudo yum install -y gcc openssl-devel bzip2-devel')
-            run('wget https://www.python.org/ftp/python/2.7.15/Python-2.7.15.tgz'
-                )
-            run('tar xzf Python-2.7.15.tgz')
-            run('cd Python-2.7.15')
-            run('./configure --enable-optimizations')
-            run('make altinstall')
-            run('cd ..')
-            run('curl "https://bootstrap.pypa.io/get-pip.py" -o "get-pip.py"')
-            run('python get-pip.py')
-            run('rm -rf Python-2.7.15*')
-            run('rm -rf get-pip.py')
-            run('export PATH=${PATH}:${HOME}/usr/bin')
-
             run('sudo yum-config-manager --enable rhel-server-rhscl-7-rpms')
             run('sudo subscription-manager repos --enable rhel-7-server-optional-rpms'
                 )
