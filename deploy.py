@@ -148,6 +148,7 @@ def init():
         run('sudo apt-get update -y')
     elif redhat_dist():
         if redhat():
+            run('sudo subscription-manager attach --auto')
             run('sudo yum-config-manager --enable rhel-server-rhscl-7-rpms')
             run('sudo subscription-manager repos --enable rhel-7-server-optional-rpms'
                 )
