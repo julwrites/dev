@@ -152,13 +152,15 @@ def init():
         run('sudo apt-get update -y')
     elif redhat_dist():
         if redhat():
+            run('sudo yum install')
             run('sudo yum-config-manager --enable rhel-server-rhscl-7-rpms')
             run('sudo subscription-manager repos --enable rhel-7-server-optional-rpms'
                 )
             run('sudo subscription-manager repos --enable rhel-server-rhscl-7-rpms'
                 )
-            run('sudo yum install epel-release')
+            run('wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm')
             run('sudo yum install epel-release-latest-7.noarch.rpm')
+            run('sudo yum install epel-release')
         if centos():
             run('sudo yum -y install centos-release-scl')
             run('sudo yum -y install https://centos7.iuscommunity.org/ius-release.rpm'
