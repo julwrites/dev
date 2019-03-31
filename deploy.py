@@ -158,7 +158,8 @@ def init():
                 )
             run('sudo subscription-manager repos --enable rhel-server-rhscl-7-rpms'
                 )
-            run('wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm')
+            run('wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm'
+                )
             run('sudo yum install epel-release-latest-7.noarch.rpm')
             run('sudo yum install epel-release')
         if centos():
@@ -170,7 +171,7 @@ def init():
             )
         run('sudo echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
             )
-        run('sudo yum update -y')
+        run('sudo yum check-update')
 
 
 Session = {"installed": [], "updated": [], "failed": []}
@@ -230,9 +231,12 @@ def pkgmgr_cmd():
 
 
 def python_cmd():
-    install_cmd = 'pip install {} -q'
-    check_cmd = 'pip list {} -q'
-    update_cmd = 'pip install {} -q'
+    pkg_cmd = 'pip'
+    if not windows():
+        pkg_cmd = 'sudo pip'
+    install_cmd = pkg_cmd + ' install {} -q'
+    check_cmd = pkg_cmd + ' list {} -q'
+    update_cmd = pkg_cmd + ' install {} -q'
     post_cmd = ''
 
     return install_cmd, check_cmd, update_cmd, post_cmd
