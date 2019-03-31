@@ -158,6 +158,7 @@ def init():
             run('sudo subscription-manager repos --enable rhel-server-rhscl-7-rpms'
                 )
             run('sudo yum install epel-release')
+            run('sudo yum install epel-release-latest-7.noarch.rpm')
         if centos():
             run('sudo yum -y install centos-release-scl')
             run('sudo yum -y install https://centos7.iuscommunity.org/ius-release.rpm'
