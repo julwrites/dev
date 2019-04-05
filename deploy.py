@@ -19,8 +19,8 @@ Common = [
 Windows = [
     # Dev Tools
     'python3',
-    'visualstudio2017buildtools',
-    'visualstudio2017-workload-vctools',
+    'visualstudio2019buildtools',
+    'visualstudio2019-workload-vctools',
     'llvm',
     'vscode',
     'activeperl',
