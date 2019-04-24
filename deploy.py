@@ -18,6 +18,7 @@ Common = [
 
 Windows = [
     # Dev Tools
+    'pip'
     'python3',
     'visualstudio2019buildtools',
     'visualstudio2019-workload-vctools',
