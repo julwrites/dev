@@ -25,7 +25,6 @@ Windows = [
     'llvm',
     'vscode',
     'activeperl',
-    'xamarin',
     # Common Tools
     '7zip.install',
     'cmdermini',
