@@ -1,6 +1,8 @@
 import platform
 import webbrowser
 import subprocess
+import os
+import shutil
 
 ################################################################################
 
@@ -272,6 +274,22 @@ def install(install_cmd, check_cmd, update_cmd, post_cmd, packages):
         run(post_cmd.format(pkg))
 
 
+def copy(src, dst):
+    if os.path.exists(dst):
+        shutil.rmtree(dst)
+
+    shutil.copytree(src, dst)
+
+
+def copy_config():
+    if windows():
+        dest = "~/AppData/Local/nvim"
+    else:
+        dest = "~/.config/nvim"
+
+    copy("nvim", dest)
+
+
 def deploy():
     init()
 
@@ -282,6 +300,8 @@ def deploy():
     install_cmd, check_cmd, update_cmd, post_cmd = python_cmd()
     packages = python_pkg()
     install(install_cmd, check_cmd, update_cmd, post_cmd, packages)
+
+    copy_config()
 
 
 ################################################################################
