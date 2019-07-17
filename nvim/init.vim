@@ -14,11 +14,11 @@ Plug 'chiel92/vim-autoformat'
 
 "" fuzzy finder
 Plug 'junegunn/fzf', { 'do': './install --bin' }
-Plug 'junegunn/fzf.vim'
 
 "" Autocomplete
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'zchee/deoplete-jedi'
+Plug 'zchee/deoplete-clang'
 
 "" color
 Plug 'nanotech/jellybeans.vim'
