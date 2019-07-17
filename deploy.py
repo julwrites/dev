@@ -7,7 +7,7 @@ import shutil
 ################################################################################
 
 # Python specific tools
-Pip = ['conan', 'cmake', 'ninja', 'lizard']
+Pip = ['conan', 'cmake', 'ninja', 'lizard', 'pynvim', 'jedi']
 
 Common = [
     # Dev Tools
@@ -130,6 +130,10 @@ def redhat_dist():
 def run(cmd):
     print('calling: ' + cmd)
     return subprocess.call(cmd, shell=True) == 0
+
+
+def script_path():
+    return os.path.dirname(os.path.realpath(__file__))
 
 
 ################################################################################
@@ -282,12 +286,14 @@ def copy(src, dst):
 
 
 def copy_config():
-    if windows():
-        dest = "~/AppData/Local/nvim"
-    else:
-        dest = "~/.config/nvim"
+    src = os.path.join(script_path(), 'nvim')
 
-    copy("nvim", dest)
+    if windows():
+        dest = os.path.join(os.getenv('LOCALAPPDATA'), 'nvim')
+    else:
+        dest = '~/.config/nvim'
+
+    copy(src, dest)
 
 
 def deploy():
@@ -300,8 +306,6 @@ def deploy():
     install_cmd, check_cmd, update_cmd, post_cmd = python_cmd()
     packages = python_pkg()
     install(install_cmd, check_cmd, update_cmd, post_cmd, packages)
-
-    copy_config()
 
 
 ################################################################################
@@ -337,5 +341,7 @@ def report():
 ################################################################################
 
 deploy()
+
+copy_config()
 
 report()
