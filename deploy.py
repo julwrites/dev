@@ -3,6 +3,8 @@ import webbrowser
 import subprocess
 import os
 import shutil
+import requests
+import zipfile
 
 ################################################################################
 
@@ -278,6 +280,20 @@ def install(install_cmd, check_cmd, update_cmd, post_cmd, packages):
         run(post_cmd.format(pkg))
 
 
+def retrieve(url):
+    zip_dst = os.path.join(script_path(), os.path.split(url)[1])
+
+    req = requests.get(url)
+
+    with open(zip_dst, "wb") as out:
+        out.write(req.content)
+
+    with zipfile.ZipFile(zip_dst, 'r') as zip_ref:
+        zip_ref.extractall(script_path())
+
+    return os.path.join(script_path(), "dev-master")
+
+
 def copy(src, dst):
     if os.path.exists(dst):
         shutil.rmtree(dst)
@@ -286,7 +302,9 @@ def copy(src, dst):
 
 
 def copy_config():
-    src = os.path.join(script_path(), 'nvim')
+    location = retrieve('https://github.com/julwrites/dev/archive/master.zip')
+
+    src = os.path.join(location, 'nvim')
 
     if windows():
         dest = os.path.join(os.getenv('LOCALAPPDATA'), 'nvim')
