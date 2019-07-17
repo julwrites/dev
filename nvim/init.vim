@@ -95,4 +95,4 @@ nnoremap <leader>r :Ag<cr>
 """""""""""""""""""""""""""""""""""""""""""""""""
 "" Color Scheme
 """""""""""""""""""""""""""""""""""""""""""""""""
-colorscheme jellybeans
+"colorscheme jellybeans
