@@ -28,10 +28,6 @@ call plug#end()
 
 " pure vim
 
-augroup Rc
-	autocmd!
-augroup END
-
 set autoread
 set swapfile
 set tildeop
@@ -95,4 +91,4 @@ nnoremap <leader>r :Ag<cr>
 """""""""""""""""""""""""""""""""""""""""""""""""
 "" Color Scheme
 """""""""""""""""""""""""""""""""""""""""""""""""
-"colorscheme jellybeans
+colorscheme jellybeans
