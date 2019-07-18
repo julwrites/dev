@@ -11,6 +11,8 @@ import zipfile
 # Python specific tools
 Pip = ['conan', 'cmake', 'ninja', 'lizard', 'pynvim', 'jedi']
 
+Npm = ['nyaovim']
+
 Common = [
     # Dev Tools
     'git',
@@ -29,6 +31,7 @@ Windows = [
     'llvm',
     'vscode',
     'activeperl',
+    'nodejs'
     # Common Tools
     '7zip.install',
     'cmdermini',
@@ -42,7 +45,8 @@ Windows = [
 Darwin = [
     # Dev Tools
     'python3',
-    'llvm'
+    'llvm',
+    'node'
 ]
 
 DarwinCask = [
@@ -66,6 +70,7 @@ Debian = [
     'lldb-7',
     'lld-7',
     'visual-studio-code',
+    'nodejs'
     # Fonts
     'fonts-firacode',
     'fonts-iosevka',
@@ -83,7 +88,8 @@ RedHat = [
     'python36',
     'python-pip',
     'devtoolset-7',
-    'llvm-toolset-7'
+    'llvm-toolset-7',
+    'nodejs'
 ]
 
 ################################################################################
@@ -189,6 +195,8 @@ def init():
             run('sudo yum -y install https://centos7.iuscommunity.org/ius-release.rpm'
                 )
 
+        run('sudo yum -y gcc-c++ make')
+        run('curl -sL https://rpm.nodesource.com/setup_10.x | sudo -E bash -')
         run('sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc'
             )
         run('sudo echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
@@ -226,6 +234,12 @@ def python_pkg():
     return select
 
 
+def node_pkg():
+    select = Npm
+
+    return select
+
+
 def pkgmgr_cmd():
     install_cmd = ''
     update_cmd = ''
@@ -259,6 +273,18 @@ def python_cmd():
     install_cmd = pkg_cmd + ' install {} -q'
     check_cmd = pkg_cmd + ' list {} -q'
     update_cmd = pkg_cmd + ' install {} -q'
+    post_cmd = ''
+
+    return install_cmd, check_cmd, update_cmd, post_cmd
+
+
+def node_cmd():
+    pkg_cmd = 'npm'
+    if not windows():
+        pkg_cmd = 'sudo npm'
+    install_cmd = pkg_cmd + ' install {} -g'
+    check_cmd = pkg_cmd + ' list {} -g'
+    update_cmd = pkg_cmd + ' update {} -g'
     post_cmd = ''
 
     return install_cmd, check_cmd, update_cmd, post_cmd
@@ -330,6 +356,10 @@ def deploy():
 
     install_cmd, check_cmd, update_cmd, post_cmd = python_cmd()
     packages = python_pkg()
+    install(install_cmd, check_cmd, update_cmd, post_cmd, packages)
+
+    install_cmd, check_cmd, update_cmd, post_cmd = node_cmd()
+    packages = node_pkg()
     install(install_cmd, check_cmd, update_cmd, post_cmd, packages)
 
 
