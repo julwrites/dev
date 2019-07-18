@@ -73,7 +73,7 @@ set wrap
 let mapleader="<"
 
 " Remap terminal escape to esc key
-:tnoremap <Esc> <C-\><C-n>
+:tnoremap <Esc><Esc> <C-\><C-n>
 :tnoremap <C-[> <C-\><C-n>
 
 " Remap ctrl p to ctrl ,
