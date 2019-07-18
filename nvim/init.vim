@@ -39,11 +39,8 @@ set wildmode=full
 "" space setting
 
 set autoindent
-set list
-set shiftround
-set shiftwidth=2
-set smartindent
 set smarttab
+set expandtab
 set tabstop=2
 
 "" appearance
