@@ -90,7 +90,7 @@ map <C-n> :NERDTreeToggle<CR>
 let g:deoplete#enable_at_startup=1
 
 " colorschemes
-set guifont=FiraCode:h14 noanti
+set guifont=FiraCode:h14
 set termguicolors
 
 """""""""""""""""""""""""""""""""""""""""""""""""
