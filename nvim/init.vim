@@ -75,6 +75,8 @@ let mapleader="<"
 " Remap terminal escape to esc key
 :tnoremap <Esc><Esc> <C-\><C-n>
 
+map <C-[> <C-c>
+
 """""""""""""""""""""""""""""""""""""""""""""""""
 "" plugin settings
 """""""""""""""""""""""""""""""""""""""""""""""""
