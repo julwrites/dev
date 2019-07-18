@@ -70,7 +70,7 @@ IF '%errorlevel%' NEQ '0' (
 
     powershell -Command "Invoke-WebRequest https://raw.githubusercontent.com/julwrites/dev/master/deploy.py -OutFile %TEMP%\deploy.py"
 
-    CALL python -pip install requests
+    CALL python -m pip install requests
 
     CALL python "%TEMP%\deploy.py"
 
