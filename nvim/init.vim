@@ -70,6 +70,7 @@ set wrap
 """""""""""""""""""""""""""""""""""""""""""""""""
 "" keymaps
 """""""""""""""""""""""""""""""""""""""""""""""""
+
 let mapleader="<"
 
 " Remap terminal escape to esc key
@@ -103,3 +104,4 @@ autocmd VimEnter * UpdateRemotePlugins
 autocmd VimEnter * AirlineTheme solarized
 autocmd VimEnter * colorscheme jellybeans
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
+autocmd BufWrite * Autoformat
