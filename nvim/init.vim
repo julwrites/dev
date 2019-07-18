@@ -23,6 +23,7 @@ Plug 'zchee/deoplete-clang'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'nanotech/jellybeans.vim'
+Plug 'KKPMW/sacredforest-vim'
 
 call plug#end()
 
@@ -88,15 +89,9 @@ map <C-n> :NERDTreeToggle<CR>
 " deoplete
 let g:deoplete#enable_at_startup=1
 
-" fzf
-nnoremap <leader>b :Buffers<cr>
-nnoremap <leader>c :History:<cr>
-nnoremap <leader>f :Files<cr>
-nnoremap <leader>g :GFiles<cr>
-nnoremap <leader>h :History<cr>
-nnoremap <leader>l :Lines<cr>
-nnoremap <leader>m :Maps<cr>
-nnoremap <leader>r :Ag<cr>
+" colorschemes
+set guifont=FiraCode:h14 noanti
+set termguicolors
 
 """""""""""""""""""""""""""""""""""""""""""""""""
 "" Automation
@@ -107,6 +102,6 @@ autocmd VimEnter * PlugUpgrade
 autocmd VimEnter * PlugInstall
 autocmd VimEnter * PlugUpdate
 autocmd VimEnter * UpdateRemotePlugins
-autocmd VimEnter * colorscheme jellybeans
+autocmd VimEnter * colorscheme sacredforest
 autocmd VimEnter * AirlineTheme solarized
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
