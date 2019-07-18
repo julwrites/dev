@@ -90,6 +90,10 @@ nnoremap <leader>m :Maps<cr>
 nnoremap <leader>r :Ag<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""
-"" Color Scheme
+"" Automation
 """""""""""""""""""""""""""""""""""""""""""""""""
-colorscheme jellybeans
+" Auto commands
+autocmd VimEnter * PlugUpgrade
+autocmd VimEnter * PlugInstall
+autocmd VimEnter * PlugUpdate
+autocmd TermResponse * colorscheme jellybeans
