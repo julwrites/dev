@@ -30,7 +30,6 @@ call plug#end()
 " pure vim
 
 set autoread
-set swapfile
 set tildeop
 set ttyfast
 set visualbell
@@ -66,6 +65,7 @@ set showmode
 set splitbelow
 set splitright
 set wrap
+set lazyredraw
 
 """""""""""""""""""""""""""""""""""""""""""""""""
 "" keymaps
@@ -104,4 +104,5 @@ autocmd VimEnter * UpdateRemotePlugins
 autocmd VimEnter * AirlineTheme solarized
 autocmd VimEnter * colorscheme jellybeans
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
+autocmd VimEnter * redraw!
 autocmd BufWrite * Autoformat
