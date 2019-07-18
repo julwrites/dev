@@ -76,7 +76,7 @@ def harvest_config():
     if windows():
         src = os.path.join(os.getenv("LOCALAPPDATA"), "nvim\init.vim")
     else:
-        src = "~/.config/Local/nvim/init.vim"
+        src = "~/.config/nvim/init.vim"
 
     copy_file(src, os.path.join(
         os.path.join(script_path(), "nvim"), "init.vim"))
