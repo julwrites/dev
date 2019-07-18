@@ -106,6 +106,7 @@ autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * PlugUpgrade
 autocmd VimEnter * PlugInstall
 autocmd VimEnter * PlugUpdate
+autocmd VimEnter * UpdateRemotePlugins
 autocmd TermResponse * colorscheme jellybeans
 autocmd TermResponse * AirlineTheme solarized
 autocmd TermResponse * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
