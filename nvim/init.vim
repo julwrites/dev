@@ -7,9 +7,10 @@ call plug#begin()
 Plug 'easymotion/vim-easymotion'
 Plug 'tpope/vim-surround'
 Plug 'scrooloose/nerdtree'
-Plug 'vim-airline/vim-airline'
 Plug 'w0rp/ale'
 Plug 'chiel92/vim-autoformat'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 
 "" fuzzy finder
 Plug 'junegunn/fzf', { 'do': './install --bin' }
@@ -103,4 +104,5 @@ autocmd VimEnter * PlugUpgrade
 autocmd VimEnter * PlugInstall
 autocmd VimEnter * PlugUpdate
 autocmd TermResponse * colorscheme jellybeans
+autocmd TermResponse * AirlineTheme='deus'
 autocmd TermResponse * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
