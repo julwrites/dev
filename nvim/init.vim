@@ -75,8 +75,6 @@ let mapleader="<"
 " Remap terminal escape to esc key
 :tnoremap <Esc><Esc> <C-\><C-n>
 
-map <C-[> <C-c>
-
 """""""""""""""""""""""""""""""""""""""""""""""""
 "" plugin settings
 """""""""""""""""""""""""""""""""""""""""""""""""
@@ -84,7 +82,7 @@ map <C-[> <C-c>
 map <C-n> :NERDTreeToggle<CR>
 
 " CtrlP
-map <C-,> :CtrlP<CR>
+map <C-p> :CtrlP<CR>
 
 " deoplete
 let g:deoplete#enable_at_startup=1
