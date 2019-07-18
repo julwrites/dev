@@ -82,12 +82,16 @@ function deploy () {
     if [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
         if [ -n "$(command -v python2.7)" ]; then
             python2.7 deploy.py
+            python2.7 -m pip install requests
         elif [ -n "$(command -v python)" ]; then
             python deploy.py
+            python -m pip install requests
         elif [ -n "$(command -v python2)" ]; then
             python2 deploy.py
+            python2 -m pip install requests
         elif [ -n "$(command -v python3)" ]; then
             python3 deploy.py
+            python3 -m pip install requests
         else
             echo Could not find python
         fi
