@@ -4,23 +4,24 @@
 
 call plug#begin()
 
+"" Navigation
+Plug 'scrooloose/nerdtree'
 Plug 'easymotion/vim-easymotion'
 Plug 'tpope/vim-surround'
-Plug 'scrooloose/nerdtree'
+Plug 'ctrlpvim/ctrlp.vim'
+
+"" Language Support
 Plug 'w0rp/ale'
 Plug 'chiel92/vim-autoformat'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-
-"" fuzzy finder
-Plug 'junegunn/fzf', { 'do': './install --bin' }
 
 "" Autocomplete
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'zchee/deoplete-jedi'
 Plug 'zchee/deoplete-clang'
 
-"" color
+"" Themes
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'nanotech/jellybeans.vim'
 
 call plug#end()
@@ -75,6 +76,9 @@ let mapleader="<"
 :tnoremap <Esc> <C-\><C-n>
 :tnoremap <C-[> <C-\><C-n>
 
+" Remap ctrl p to ctrl ,
+let g:ctrlp_map = '<c-,>'
+let g:ctrlp_cmd = 'CtrlP'
 
 """""""""""""""""""""""""""""""""""""""""""""""""
 "" plugin settings
