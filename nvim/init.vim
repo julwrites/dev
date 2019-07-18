@@ -104,5 +104,5 @@ autocmd VimEnter * PlugUpgrade
 autocmd VimEnter * PlugInstall
 autocmd VimEnter * PlugUpdate
 autocmd TermResponse * colorscheme jellybeans
-autocmd TermResponse * AirlineTheme='deus'
+autocmd TermResponse * AirlineTheme deus
 autocmd TermResponse * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif

@@ -70,11 +70,17 @@ IF '%errorlevel%' NEQ '0' (
 
     powershell -Command "Invoke-WebRequest https://raw.githubusercontent.com/julwrites/dev/master/deploy.py -OutFile %TEMP%\deploy.py"
 
+    powershell -Command "Invoke-WebRequest https://bootstrap.pypa.io/get-pip.py -OutFile %TEMP%\get-pip.py"
+
+    CALL python "%TEMP%\get-pip.py"
+
     CALL python -m pip install requests
 
     CALL python "%TEMP%\deploy.py"
 
     DEL "%TEMP%\deploy.py"
+
+    DEL "%TEMP%\get-pip.py"
 
 :: BatchScriptProxy
 :--------------------------------------    
