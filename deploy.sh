@@ -28,7 +28,9 @@ function init () {
 
         curl -o deploy.py "https://raw.githubusercontent.com/julwrites/dev/master/deploy.py"
 
-        brew list python@2 &> /dev/null || brew install python@2
+        brew upgrade
+
+        brew install python@2
     elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
         cd /tmp
 
