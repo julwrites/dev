@@ -71,6 +71,10 @@ set wrap
 """""""""""""""""""""""""""""""""""""""""""""""""
 let mapleader="<"
 
+" Remap terminal escape to esc key
+:tnoremap <Esc> <C-\><C-n>
+:tnoremap <C-[> <C-\><C-n>
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""
 "" plugin settings
