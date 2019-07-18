@@ -134,6 +134,20 @@ def run(cmd):
     return subprocess.call(cmd, shell=True) == 0
 
 
+def copy_folder(src, dst):
+    if os.path.exists(dst):
+        shutil.rmtree(dst)
+
+    shutil.copytree(src, dst)
+
+
+def copy_file(src, dst):
+    if os.path.exists(dst):
+        os.remove(dst)
+
+    shutil.copy(src, dst)
+
+
 def script_path():
     return os.path.dirname(os.path.realpath(__file__))
 
@@ -294,13 +308,6 @@ def retrieve(url):
     return os.path.join(script_path(), "dev-master")
 
 
-def copy(src, dst):
-    if os.path.exists(dst):
-        shutil.rmtree(dst)
-
-    shutil.copytree(src, dst)
-
-
 def copy_config():
     location = retrieve('https://github.com/julwrites/dev/archive/master.zip')
 
@@ -311,7 +318,7 @@ def copy_config():
     else:
         dest = '~/.config/nvim'
 
-    copy(src, dest)
+    copy_folder(src, dest)
 
 
 def deploy():
