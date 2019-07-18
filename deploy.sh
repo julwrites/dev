@@ -24,7 +24,7 @@ function init () {
 
         brew update
 
-        curl -o deploy.py "https://raw.githubusercontent.com/julwrites/tools/master/deploy.py"
+        curl -o deploy.py "https://raw.githubusercontent.com/julwrites/dev/master/deploy.py"
 
         brew install python@2
     elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
@@ -60,7 +60,7 @@ function init () {
             echo Could not find package manager
         fi
 
-        wget -O deploy.py "https://github.com/julwrites/tools/raw/master/deploy.py"
+        wget -O deploy.py "https://github.com/julwrites/dev/raw/master/deploy.py"
 
     else
         echo Platform not recognized
