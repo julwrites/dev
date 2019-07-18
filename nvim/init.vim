@@ -15,7 +15,7 @@ Plug 'w0rp/ale'
 Plug 'chiel92/vim-autoformat'
 
 "" Autocomplete
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'Shougo/deoplete.nvim'
 Plug 'zchee/deoplete-jedi'
 Plug 'zchee/deoplete-clang'
 
