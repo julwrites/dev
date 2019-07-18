@@ -24,6 +24,8 @@ function init () {
 
         brew update
 
+        sudo rm -rf deploy.py
+
         curl -o deploy.py "https://raw.githubusercontent.com/julwrites/dev/master/deploy.py"
 
         brew install python@2
@@ -60,7 +62,9 @@ function init () {
             echo Could not find package manager
         fi
 
-        wget -O deploy.py "https://github.com/julwrites/dev/raw/master/deploy.py"
+        sudo rm -rf deploy.py
+
+        wget -O deploy.py "https://raw.githubusercontent.com/julwrites/dev/master/deploy.py"
 
     else
         echo Platform not recognized

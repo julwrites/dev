@@ -3,7 +3,7 @@ import webbrowser
 import subprocess
 import os
 import shutil
-import requests
+import urllib2
 import zipfile
 
 ################################################################################
@@ -283,10 +283,10 @@ def install(install_cmd, check_cmd, update_cmd, post_cmd, packages):
 def retrieve(url):
     zip_dst = os.path.join(script_path(), os.path.split(url)[1])
 
-    req = requests.get(url)
+    req = urllib2.urlopen(url)
 
     with open(zip_dst, "wb") as out:
-        out.write(req.content)
+        out.write(req.read())
 
     with zipfile.ZipFile(zip_dst, 'r') as zip_ref:
         zip_ref.extractall(script_path())

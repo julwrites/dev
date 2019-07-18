@@ -64,11 +64,15 @@ IF '%errorlevel%' NEQ '0' (
 
     CALL choco install -y python
 
-    @"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadFile('https://raw.githubusercontent.com/julwrites/dev/master/deploy.py', 'deploy.py'))" 
+    DEL "%TEMP%\deploy.py"
 
-    CALL python deploy.py
+    ECHO Downloading deploy script
 
-    DEL deploy.py
+    powershell -Command "Invoke-WebRequest https://raw.githubusercontent.com/julwrites/dev/master/deploy.py -OutFile %TEMP%\deploy.py"
+
+    CALL python "%TEMP%\deploy.py"
+
+    DEL "%TEMP%\deploy.py"
 
 :: BatchScriptProxy
 :--------------------------------------    
