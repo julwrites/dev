@@ -76,7 +76,7 @@ let mapleader="<"
 :tnoremap <Esc><Esc> <C-\><C-n>
 
 " Remap ctrl p to ctrl ,
-let g:ctrlp_map = '<c-,>'
+let g:ctrlp_map = '<C-,>'
 let g:ctrlp_cmd = 'CtrlP'
 
 """""""""""""""""""""""""""""""""""""""""""""""""
@@ -107,6 +107,6 @@ autocmd VimEnter * PlugUpgrade
 autocmd VimEnter * PlugInstall
 autocmd VimEnter * PlugUpdate
 autocmd VimEnter * UpdateRemotePlugins
-autocmd TermResponse * colorscheme jellybeans
-autocmd TermResponse * AirlineTheme solarized
-autocmd TermResponse * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
+autocmd VimEnter * colorscheme jellybeans
+autocmd VimEnter * AirlineTheme solarized
+autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
