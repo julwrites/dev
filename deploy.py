@@ -33,7 +33,6 @@ Windows = [
     'activeperl',
     'nodejs',
     'ruby',
-    'uncrustify',
     # Common Tools
     '7zip.install',
     'cmdermini',

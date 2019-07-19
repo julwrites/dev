@@ -20,7 +20,7 @@ Plug 'tpope/vim-commentary'
 
 "" Formatting
 Plug 'tommcdo/vim-lion'
-Plug 'sbdchd/neoformat'
+Plug 'chiel92/vim-autoformat'
 
 "" Themes
 Plug 'vim-airline/vim-airline'
@@ -97,7 +97,7 @@ set clipboard=unnamed
 "" keymaps
 """""""""""""""""""""""""""""""""""""""""""""""""
 
-let mapleader="<"
+let mapleader="<C-<>"
 
 " Remap terminal escape to esc key
 :tnoremap <Esc><Esc> <C-\><C-n>
@@ -116,6 +116,11 @@ let g:coc_global_extensions=['coc-ccls', 'coc-python', 'coc-tsserver', 'coc-rls'
 inoremap <silent><expr> <tab> coc#refresh()
 map <M-s> :CocConfig<CR>
 
+" Autoformat
+let g:autoformat_autoindent = 0
+let g:autoformat_retab = 0
+let g:autoformat_remove_trailing_spaces = 0
+
 """""""""""""""""""""""""""""""""""""""""""""""""
 "" Automation
 """""""""""""""""""""""""""""""""""""""""""""""""
@@ -129,4 +134,5 @@ autocmd VimEnter * AirlineTheme solarized
 autocmd VimEnter * colorscheme jellybeans
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
 autocmd VimEnter * redraw!
-autocmd BufWrite * Neoformat
+autocmd BufWrite * Autoformat
+autocmd FileType vim,tex let b:autoformat_autoindent=0
