@@ -8,14 +8,18 @@ call plug#begin()
 Plug 'scrooloose/nerdtree'
 Plug 'easymotion/vim-easymotion'
 Plug 'tpope/vim-surround'
+Plug 'wellle/targets.vim'
 Plug 'ctrlpvim/ctrlp.vim'
+Plug 'rhysd/clever-f.vim'
+Plug 'ntpeters/visual-star-search'
 
 "" Language Support
 Plug 'w0rp/ale'
 Plug 'chiel92/vim-autoformat'
+Plug 'tpope/vim-commentary'
 
 "" Autocomplete
-Plug 'Shougo/deoplete.nvim'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'zchee/deoplete-jedi'
 Plug 'zchee/deoplete-clang'
 
@@ -27,42 +31,68 @@ Plug 'nanotech/jellybeans.vim'
 call plug#end()
 
 
-" pure vim
+"""""""""""""""""""""""""""""""""""""""""""""""""
+"" vim settings
+"""""""""""""""""""""""""""""""""""""""""""""""""
+
+syntax on
 
 set autoread
+set confirm
+
 set tildeop
+
 set ttyfast
+
 set visualbell
+
 set wildmenu
 set wildmode=full
 
-"" space setting
-
 set autoindent
+
 set smarttab
 set expandtab
 set tabstop=2
 
-"" appearance
+set ignorecase
+set smartcase
+set infercase
 
-syntax on
 set backspace=indent,eol,start
-set colorcolumn=80
+
+set synmaxcol=200
+
+set ruler
+
 set completeopt=menu
+
 set cursorline
+
 set hlsearch
-set inccommand=nosplit
 set incsearch
+
+set inccommand=nosplit
+
+set nowrap
 set number
 set relativenumber
-set shortmess=a
+
 set showcmd
 set showmatch
 set showmode
+
 set splitbelow
 set splitright
-set wrap
+
 set lazyredraw
+
+" colors
+set guioptions=
+set guifont=FiraCode:h14
+set termguicolors
+
+set clipboard=unnamed
 
 """""""""""""""""""""""""""""""""""""""""""""""""
 "" keymaps
@@ -84,10 +114,6 @@ map <C-p> :CtrlP<CR>
 
 " deoplete
 let g:deoplete#enable_at_startup=1
-
-" colorschemes
-set guifont=FiraCode:h14
-set termguicolors
 
 """""""""""""""""""""""""""""""""""""""""""""""""
 "" Automation

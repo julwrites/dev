@@ -11,7 +11,7 @@ import zipfile
 # Python specific tools
 Pip = ['conan', 'cmake', 'ninja', 'lizard', 'pynvim', 'jedi']
 
-Npm = ['nyaovim']
+Npm = ['@vue/cli']
 
 Common = [
     # Dev Tools
@@ -31,7 +31,8 @@ Windows = [
     'llvm',
     'vscode',
     'activeperl',
-    'nodejs'
+    'nodejs',
+    'ruby'
     # Common Tools
     '7zip.install',
     'cmdermini',
@@ -46,7 +47,8 @@ Darwin = [
     # Dev Tools
     'python3',
     'llvm',
-    'node'
+    'node',
+    "ruby"
 ]
 
 DarwinCask = [
@@ -70,7 +72,8 @@ Debian = [
     'lldb-7',
     'lld-7',
     'visual-studio-code',
-    'nodejs'
+    'nodejs',
+    'ruby-full'
     # Fonts
     'fonts-firacode',
     'fonts-iosevka',
@@ -89,7 +92,8 @@ RedHat = [
     'python-pip',
     'devtoolset-7',
     'llvm-toolset-7',
-    'nodejs'
+    'nodejs',
+    'ruby'
 ]
 
 ################################################################################
