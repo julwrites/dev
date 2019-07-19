@@ -72,18 +72,19 @@ def script_path():
 ################################################################################
 
 
-def harvest_config():
+def scatter_config():
+    src = os.path.join(script_path(), 'nvim')
+
     if windows():
-        dst = os.path.join(os.getenv("LOCALAPPDATA"), "nvim\init.vim")
+        dest = os.path.join(os.getenv('LOCALAPPDATA'), 'nvim')
     else:
-        dst = "~/.config/nvim/init.vim"
+        dest = '~/.config/nvim'
 
-    copy_file(
-        os.path.join(os.path.join(script_path(), "nvim"), "init.vim"), dst)
-
-
-def harvest():
-    harvest_config()
+    copy_folder(src, dest)
 
 
-harvest()
+def scatter():
+    scatter_config()
+
+
+scatter()
