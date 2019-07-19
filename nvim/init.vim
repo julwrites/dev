@@ -15,14 +15,9 @@ Plug 'nelstrom/vim-visual-star-search'
 Plug 'ntpeters/vim-better-whitespace'
 
 "" Language Support
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'chiel92/vim-autoformat'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'tpope/vim-commentary'
-
-"" Autocomplete
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'zchee/deoplete-jedi'
-Plug 'zchee/deoplete-clang'
 Plug 'tommcdo/vim-lion'
 
 "" Themes
@@ -114,10 +109,8 @@ map <C-n> :NERDTreeToggle<CR>
 " CtrlP
 map <C-p> :CtrlP<CR>
 
-" deoplete
-let g:deoplete#enable_at_startup=1
-
-" coc
+" CoC
+let g:coc_global_extensions=['coc-ccls', 'coc-python', 'coc-tsserver', 'coc-rls', 'coc-vetur', 'coc-json']
 inoremap <silent><expr> <tab> coc#refresh()
 map <M-s> :CocConfig<CR>
 

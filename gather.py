@@ -72,7 +72,7 @@ def script_path():
 ################################################################################
 
 
-def harvest_config():
+def gather_config():
     if windows():
         src = os.path.join(os.getenv("LOCALAPPDATA"), "nvim\init.vim")
     else:
@@ -82,8 +82,8 @@ def harvest_config():
         os.path.join(script_path(), "nvim"), "init.vim"))
 
 
-def harvest():
-    harvest_config()
+def gather():
+    gather_config()
 
 
-harvest()
+gather()
