@@ -11,7 +11,8 @@ Plug 'tpope/vim-surround'
 Plug 'wellle/targets.vim'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'rhysd/clever-f.vim'
-Plug 'ntpeters/visual-star-search'
+Plug 'nelstrom/vim-visual-star-search'
+Plug 'ntpeters/vim-better-whitespace'
 
 "" Language Support
 Plug 'w0rp/ale'
@@ -22,6 +23,7 @@ Plug 'tpope/vim-commentary'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'zchee/deoplete-jedi'
 Plug 'zchee/deoplete-clang'
+Plug 'tommcdo/vim-lion'
 
 "" Themes
 Plug 'vim-airline/vim-airline'
