@@ -32,7 +32,8 @@ Windows = [
     'vscode',
     'activeperl',
     'nodejs',
-    'ruby'
+    'ruby',
+    'uncrustify',
     # Common Tools
     '7zip.install',
     'cmdermini',

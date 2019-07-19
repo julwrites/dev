@@ -15,10 +15,12 @@ Plug 'nelstrom/vim-visual-star-search'
 Plug 'ntpeters/vim-better-whitespace'
 
 "" Language Support
-Plug 'chiel92/vim-autoformat'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'tpope/vim-commentary'
+
+"" Formatting
 Plug 'tommcdo/vim-lion'
+Plug 'sbdchd/neoformat'
 
 "" Themes
 Plug 'vim-airline/vim-airline'
@@ -127,4 +129,4 @@ autocmd VimEnter * AirlineTheme solarized
 autocmd VimEnter * colorscheme jellybeans
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
 autocmd VimEnter * redraw!
-autocmd BufWrite * Autoformat
+autocmd BufWrite * Neoformat
