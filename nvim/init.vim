@@ -15,7 +15,7 @@ Plug 'nelstrom/vim-visual-star-search'
 Plug 'ntpeters/vim-better-whitespace'
 
 "" Language Support
-Plug 'w0rp/ale'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'chiel92/vim-autoformat'
 Plug 'tpope/vim-commentary'
 
@@ -116,6 +116,10 @@ map <C-p> :CtrlP<CR>
 
 " deoplete
 let g:deoplete#enable_at_startup=1
+
+" coc
+inoremap <silent><expr> <tab> coc#refresh()
+map <M-s> :CocConfig<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""
 "" Automation
