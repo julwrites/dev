@@ -18,6 +18,9 @@ Plug 'ntpeters/vim-better-whitespace'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'tpope/vim-commentary'
 
+"" Tools
+Plug 'idanarye/vim-omnipytent'
+
 "" Formatting
 Plug 'tommcdo/vim-lion'
 Plug 'chiel92/vim-autoformat'
@@ -115,12 +118,10 @@ let mapleader="<C-<>"
 """""""""""""""""""""""""""""""""""""""""""""""""
 " NERDTree
 map <C-n> :NERDTreeToggle<CR>
+let NERDTreeShowHidden=1
 
 " CtrlP
 map <C-p> :CtrlP<CR>
-
-" Commentary
-map <C-k><C-c> :Commentary<CR>
 
 " CoC
 let g:coc_global_extensions=['coc-ccls', 'coc-python', 'coc-tsserver', 'coc-rls', 'coc-vetur', 'coc-json']
@@ -131,6 +132,10 @@ map <M-s> :CocConfig<CR>
 let g:autoformat_autoindent = 0
 let g:autoformat_retab = 0
 let g:autoformat_remove_trailing_spaces = 0
+
+" Omnipytent
+let g:omnipytent_filePrefix = '.julwrites'
+let g:omnipytent_defaultPythonVersion = 3
 
 """""""""""""""""""""""""""""""""""""""""""""""""
 "" Automation
@@ -155,3 +160,4 @@ autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in
 autocmd BufWrite * Autoformat
 autocmd FileType vim,tex let b:autoformat_autoindent=0
 autocmd BufNewFile,BufRead Jenkinsfile setf groovy
+
