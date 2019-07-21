@@ -54,7 +54,6 @@ set splitright
 set lazyredraw
 
 set guioptions=
-set guifont=FiraCode:h14
 set termguicolors
 
 " Status Bar
@@ -108,6 +107,9 @@ let mapleader="<C-<>"
 " Remap terminal escape to esc key
 :tnoremap <Esc><Esc> <C-\><C-n>
 
+" Remap re-loading of init.vim to F5
+:nnoremap <F5> :so $MYVIMRC<CR>
+
 """""""""""""""""""""""""""""""""""""""""""""""""
 "" plugin settings
 """""""""""""""""""""""""""""""""""""""""""""""""
@@ -116,6 +118,9 @@ map <C-n> :NERDTreeToggle<CR>
 
 " CtrlP
 map <C-p> :CtrlP<CR>
+
+" Commentary
+map <C-k><C-c> :Commentary<CR>
 
 " CoC
 let g:coc_global_extensions=['coc-ccls', 'coc-python', 'coc-tsserver', 'coc-rls', 'coc-vetur', 'coc-json']
@@ -132,14 +137,19 @@ let g:autoformat_remove_trailing_spaces = 0
 """""""""""""""""""""""""""""""""""""""""""""""""
 " Auto commands
 autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * PlugUpgrade
-autocmd VimEnter * PlugInstall
-autocmd VimEnter * PlugUpdate
-autocmd VimEnter * UpdateRemotePlugins
+" Set up theme
 autocmd VimEnter * AirlineTheme solarized
 autocmd VimEnter * colorscheme jellybeans
-autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
+autocmd VimEnter * GuiFont Fira Code
+autocmd VimEnter * GuiPopupmenu 0
 autocmd VimEnter * redraw!
+
+" Do updates
+"autocmd VimEnter * PlugUpgrade
+"autocmd VimEnter * PlugInstall
+autocmd VimEnter * PlugUpdate
+autocmd VimEnter * UpdateRemotePlugins
+autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
 
 " File commands
 autocmd BufWrite * Autoformat
