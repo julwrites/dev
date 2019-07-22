@@ -112,7 +112,7 @@ let mapleader="<C-<>"
 :tnoremap <Esc><Esc> <C-\><C-n>
 
 " Remap re-loading of init.vim to F5
-:nnoremap <F5> :so $MYVIMRC<CR>
+:nnoremap <F5> :call Refresh()<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""
 "" plugin settings
@@ -138,23 +138,39 @@ let g:autoformat_remove_trailing_spaces = 0
 let g:omnipytent_filePrefix = '.julwrites'
 let g:omnipytent_defaultPythonVersion = 3
 
+
+"""""""""""""""""""""""""""""""""""""""""""""""""
+"" Funtions
+"""""""""""""""""""""""""""""""""""""""""""""""""
+:function! Emplace()
+: PlugUpgrade
+: PlugInstall
+:endfunction
+
+:function! Update()
+: PlugUpdate
+: UpdateRemotePlugins
+:endfunction
+
+:function! Refresh()
+: so $MYVIMRC<CR>
+: AirlineTheme solarized
+: colorscheme jellybeans
+: GuiFont Fira Code
+: GuiPopupmenu 0
+: redraw!
+:endfunction
+
+
 """""""""""""""""""""""""""""""""""""""""""""""""
 "" Automation
 """""""""""""""""""""""""""""""""""""""""""""""""
 " Auto commands
 autocmd StdinReadPre * let s:std_in=1
-" Set up theme
-autocmd VimEnter * AirlineTheme solarized
-autocmd VimEnter * colorscheme jellybeans
-autocmd VimEnter * GuiFont Fira Code
-autocmd VimEnter * GuiPopupmenu 0
-autocmd VimEnter * redraw!
 
 " Do updates
-"autocmd VimEnter * PlugUpgrade
-"autocmd VimEnter * PlugInstall
-autocmd VimEnter * PlugUpdate
-autocmd VimEnter * UpdateRemotePlugins
+autocmd VimEnter * Refresh()
+autocmd VimEnter * Update()
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
 
 " File commands
