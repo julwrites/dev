@@ -1,5 +1,5 @@
 import os
-import shutil
+import distutils.core
 import platform
 import subprocess
 
@@ -51,20 +51,6 @@ def run(cmd):
     return subprocess.call(cmd, shell=True) == 0
 
 
-def copy_folder(src, dst):
-    if os.path.exists(dst):
-        shutil.rmtree(dst)
-
-    shutil.copytree(src, dst)
-
-
-def copy_file(src, dst):
-    if os.path.exists(dst):
-        os.remove(dst)
-
-    shutil.copy(src, dst)
-
-
 def script_path():
     return os.path.dirname(os.path.realpath(__file__))
 
@@ -80,7 +66,7 @@ def scatter_config():
     else:
         dest = '~/.config/nvim'
 
-    copy_folder(src, dest)
+    distutils.dir_util.copy_tree(src, dest)
 
 
 def scatter():
