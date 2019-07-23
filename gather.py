@@ -1,5 +1,5 @@
 import os
-import shutil
+import distutils.core
 import platform
 import subprocess
 
@@ -51,20 +51,6 @@ def run(cmd):
     return subprocess.call(cmd, shell=True) == 0
 
 
-def copy_folder(src, dst):
-    if os.path.exists(dst):
-        shutil.rmtree(dst)
-
-    shutil.copytree(src, dst)
-
-
-def copy_file(src, dst):
-    if os.path.exists(dst):
-        os.remove(dst)
-
-    shutil.copy(src, dst)
-
-
 def script_path():
     return os.path.dirname(os.path.realpath(__file__))
 
@@ -73,13 +59,14 @@ def script_path():
 
 
 def gather_config():
-    if windows():
-        src = os.path.join(os.getenv("LOCALAPPDATA"), "nvim\init.vim")
-    else:
-        src = "~/.config/nvim/init.vim"
+    dst = os.path.join(script_path(), 'nvim')
 
-    copy_file(src, os.path.join(
-        os.path.join(script_path(), "nvim"), "init.vim"))
+    if windows():
+        src = os.path.join(os.getenv("LOCALAPPDATA"), "nvim")
+    else:
+        src = "~/.config/nvim"
+
+    distutils.dir_util.copy_tree(src, dst)
 
 
 def gather():
