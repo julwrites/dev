@@ -11,7 +11,9 @@ import zipfile
 # Python specific tools
 Pip = ['conan', 'cmake', 'ninja', 'lizard', 'pynvim', 'jedi']
 
-Npm = ['@vue/cli']
+Gem = ['neovim']
+
+Npm = ['neovim','@vue/cli']
 
 Common = [
     # Dev Tools
@@ -238,6 +240,13 @@ def python_pkg():
     return select
 
 
+def ruby_pkg():
+    select = Gem
+
+    return select
+
+
+
 def node_pkg():
     select = Npm
 
@@ -280,6 +289,19 @@ def python_cmd():
     post_cmd = ''
 
     return install_cmd, check_cmd, update_cmd, post_cmd
+
+
+def ruby_cmd():
+    pkg_cmd = 'gem'
+    if not windows():
+        pkg_cmd = 'sudo gem'
+    install_cmd = pkg_cmd + ' install {}'
+    check_cmd = pkg_cmd + ' list {}'
+    update_cmd = pkg_cmd + ' update {}'
+    post_cmd = ''
+
+    return install_cmd, check_cmd, update_cmd, post_cmd
+
 
 
 def node_cmd():
@@ -364,6 +386,10 @@ def deploy():
 
     install_cmd, check_cmd, update_cmd, post_cmd = node_cmd()
     packages = node_pkg()
+    install(install_cmd, check_cmd, update_cmd, post_cmd, packages)
+
+    install_cmd, check_cmd, update_cmd, post_cmd = ruby_cmd()
+    packages = ruby_pkg()
     install(install_cmd, check_cmd, update_cmd, post_cmd, packages)
 
 
