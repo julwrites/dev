@@ -1,0 +1,5 @@
+{
+        "coc.preferences.colorSupport": true,
+        "ccls.codeLens.enabled": true,
+        "ccls.codeLens.renderInline": true,
+}

@@ -15,8 +15,9 @@ Plug 'nelstrom/vim-visual-star-search'
 Plug 'ntpeters/vim-better-whitespace'
 
 "" Language Support
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc.nvim', {'branch': 'release' }
 Plug 'tpope/vim-commentary'
+Plug 'dzeban/vim-log-syntax'
 
 "" Tools
 Plug 'idanarye/vim-omnipytent'
@@ -46,7 +47,7 @@ set confirm
 
 " Key Operations
 set tildeop
-
+ 
 set backspace=indent,eol,start
 
 " Terminal
