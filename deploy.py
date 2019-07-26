@@ -13,7 +13,7 @@ Pip = ['conan', 'cmake', 'ninja', 'lizard', 'pynvim', 'jedi']
 
 Gem = ['neovim']
 
-Npm = ['neovim','@vue/cli']
+Npm = ['neovim', '@vue/cli']
 
 Common = [
     # Dev Tools
@@ -246,7 +246,6 @@ def ruby_pkg():
     return select
 
 
-
 def node_pkg():
     select = Npm
 
@@ -301,7 +300,6 @@ def ruby_cmd():
     post_cmd = ''
 
     return install_cmd, check_cmd, update_cmd, post_cmd
-
 
 
 def node_cmd():
@@ -360,17 +358,28 @@ def retrieve(url):
     return os.path.join(script_path(), "dev-master")
 
 
-def copy_config():
-    location = retrieve('https://github.com/julwrites/dev/archive/master.zip')
+def checkout_config(dest):
+    run('git clone https://github.com/julwrites/nvim ' + dest)
 
-    src = os.path.join(location, 'nvim')
+
+def scatter_config():
+    src = os.path.join(script_path(), 'nvim')
 
     if windows():
         dest = os.path.join(os.getenv('LOCALAPPDATA'), 'nvim')
     else:
         dest = '~/.config/nvim'
 
-    copy_folder(src, dest)
+    if os.path.exists(dest):
+        os.chdir(dest)
+    else:
+        checkout_config(dest)
+
+    os.chdir(dest)
+    if not run('git pull'):
+        os.chdir(script_path())
+        distutils.dir_util.remove_tree(dest)
+        checkout_config(dest)
 
 
 def deploy():
@@ -427,6 +436,6 @@ def report():
 
 deploy()
 
-copy_config()
+scatter_config()
 
 report()
