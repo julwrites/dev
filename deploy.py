@@ -5,6 +5,8 @@ import os
 import shutil
 import requests
 import zipfile
+import * from utils
+import * from vim_config
 
 ################################################################################
 
@@ -97,72 +99,6 @@ RedHat = [
     'nodejs',
     'ruby'
 ]
-
-################################################################################
-
-
-def match(platform, candidate):
-    return platform.find(candidate) != -1
-
-
-def windows():
-    return 'Windows' in platform.uname()[0]
-
-
-def darwin():
-    return 'Darwin' in platform.uname()[0]
-
-
-def linux():
-    return 'Linux' in platform.uname()[0]
-
-
-def debian():
-    return linux() and match(platform.linux_distribution()[0], 'Debian')
-
-
-def ubuntu():
-    return linux() and match(platform.linux_distribution()[0], 'Ubuntu')
-
-
-def debian_dist():
-    return debian() or ubuntu()
-
-
-def redhat():
-    return linux() and match(platform.linux_distribution()[0], 'Red Hat')
-
-
-def centos():
-    return linux() and match(platform.linux_distribution()[0], 'CentOS')
-
-
-def redhat_dist():
-    return redhat() or centos()
-
-
-def run(cmd):
-    print('calling: ' + cmd)
-    return subprocess.call(cmd, shell=True) == 0
-
-
-def copy_folder(src, dst):
-    if os.path.exists(dst):
-        shutil.rmtree(dst)
-
-    shutil.copytree(src, dst)
-
-
-def copy_file(src, dst):
-    if os.path.exists(dst):
-        os.remove(dst)
-
-    shutil.copy(src, dst)
-
-
-def script_path():
-    return os.path.dirname(os.path.realpath(__file__))
-
 
 ################################################################################
 
@@ -356,30 +292,6 @@ def retrieve(url):
         zip_ref.extractall(script_path())
 
     return os.path.join(script_path(), "dev-master")
-
-
-def checkout_config(dest):
-    run('git clone https://github.com/julwrites/nvim ' + dest)
-
-
-def scatter_config():
-    src = os.path.join(script_path(), 'nvim')
-
-    if windows():
-        dest = os.path.join(os.getenv('LOCALAPPDATA'), 'nvim')
-    else:
-        dest = '~/.config/nvim'
-
-    if os.path.exists(dest):
-        os.chdir(dest)
-    else:
-        checkout_config(dest)
-
-    os.chdir(dest)
-    if not run('git pull'):
-        os.chdir(script_path())
-        distutils.dir_util.remove_tree(dest)
-        checkout_config(dest)
 
 
 def deploy():
