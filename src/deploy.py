@@ -26,7 +26,7 @@ Common = [
 
 Windows = [
     # Dev Tools
-    'pip'
+    'pip',
     'python3',
     'visualstudio2019buildtools',
     'visualstudio2019-workload-vctools',
@@ -39,7 +39,7 @@ Windows = [
     '7zip.install',
     'cmdermini',
     'miktex',
-    'synctrayzor'
+    'synctrayzor',
     # Fonts
     'Hasklig',
     'FiraCode'
@@ -75,7 +75,7 @@ Debian = [
     'lld-7',
     'visual-studio-code',
     'nodejs',
-    'ruby-full'
+    'ruby-full',
     # Fonts
     'fonts-firacode',
     'fonts-iosevka',
