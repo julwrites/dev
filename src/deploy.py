@@ -5,8 +5,6 @@ import os
 import shutil
 import requests
 import zipfile
-import * from utils
-import * from vim_config
 
 ################################################################################
 
@@ -103,8 +101,114 @@ RedHat = [
 ################################################################################
 
 
+def match(platform, candidate):
+    return platform.find(candidate) != -1
+
+
+def windows():
+    return 'Windows' in platform.uname()[0]
+
+
+def darwin():
+    return 'Darwin' in platform.uname()[0]
+
+
+def linux():
+    return 'Linux' in platform.uname()[0]
+
+
+def debian():
+    return linux() and match(platform.linux_distribution()[0], 'Debian')
+
+
+def ubuntu():
+    return linux() and match(platform.linux_distribution()[0], 'Ubuntu')
+
+
+def debian_dist():
+    return debian() or ubuntu()
+
+
+def redhat():
+    return linux() and match(platform.linux_distribution()[0], 'Red Hat')
+
+
+def centos():
+    return linux() and match(platform.linux_distribution()[0], 'CentOS')
+
+
+def redhat_dist():
+    return redhat() or centos()
+
+
+def run(cmd):
+    print('calling: ' + cmd)
+    return subprocess.call(cmd, shell=True) == 0
+
+
+def copy_folder(src, dst):
+    if os.path.exists(dst):
+        shutil.rmtree(dst)
+
+    shutil.copytree(src, dst)
+
+
+def copy_file(src, dst):
+    if os.path.exists(dst):
+        os.remove(dst)
+
+    shutil.copy(src, dst)
+
+
+def script_path():
+    return os.path.dirname(os.path.realpath(__file__))
+
+
+################################################################################
+
+
+def checkout_config(dest):
+    run('git clone https://github.com/julwrites/nvim ' + dest)
+
+
+def scatter_config():
+    src = os.path.join(script_path(), 'nvim')
+
+    if windows():
+        dest = os.path.join(os.getenv('LOCALAPPDATA'), 'nvim')
+    else:
+        dest = '~/.config/nvim'
+
+    if not os.path.exists(dest):
+        checkout_config(dest)
+
+    os.chdir(dest)
+
+    if not run('git pull'):
+        os.chdir(script_path())
+        distutils.dir_util.remove_tree(dest)
+        checkout_config(dest)
+
+    os.chdir(dest)
+
+    if windows():
+        dest = os.path.join(os.getenv('LOCALAPPDATA'), '..')
+    else:
+        dest = '~/.vim'
+
+    distutils.dir_util.copy_file('.vimrc', )
+
+    os.chdir(script_path())
+
+
+################################################################################
+
+
 def init():
     if windows():
+        run('@"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString(\'https://chocolatey.org/install.ps1\'))" && SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"'
+            )
+        run('choco upgrade chocolatey')
         run('choco upgrade -y')
     elif darwin():
         run('xcode-select --install')
