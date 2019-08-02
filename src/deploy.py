@@ -186,7 +186,7 @@ def scatter_config():
 
     if not run('git pull'):
         os.chdir(script_path())
-        distutils.dir_util.remove_tree(dest)
+        shutil.rmtree(dest)
         checkout_config(dest)
 
     os.chdir(dest)
