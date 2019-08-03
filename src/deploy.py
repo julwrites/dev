@@ -35,6 +35,7 @@ Windows = [
     'activeperl',
     'nodejs',
     'ruby',
+    'dart-sdk',
     # Common Tools
     '7zip.install',
     'cmdermini',
