@@ -35,6 +35,7 @@ Windows = [
     'activeperl',
     'nodejs',
     'ruby',
+    'flutter',
     'dart-sdk',
     # Common Tools
     '7zip.install',
@@ -51,7 +52,9 @@ Darwin = [
     'python3',
     'llvm',
     'node',
-    "ruby"
+    'ruby',
+    'flutter',
+    'dart'
 ]
 
 DarwinCask = [
@@ -77,6 +80,8 @@ Debian = [
     'visual-studio-code',
     'nodejs',
     'ruby-full',
+    'flutter',
+    'dart',
     # Fonts
     'fonts-firacode',
     'fonts-iosevka',
