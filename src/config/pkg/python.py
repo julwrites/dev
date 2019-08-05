@@ -1,0 +1,1 @@
+Pip = ['conan', 'cmake', 'ninja', 'lizard', 'pynvim', 'jedi']

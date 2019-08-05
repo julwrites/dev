@@ -8,101 +8,15 @@ import zipfile
 
 ################################################################################
 
-# Python specific tools
-Pip = ['conan', 'cmake', 'ninja', 'lizard', 'pynvim', 'jedi']
+from config.os.common import *
+from config.os.windows import *
+from config.os.darwin import *
+from config.os.debian import *
+from config.os.redhat import *
 
-Gem = ['neovim']
-
-Npm = ['neovim', '@vue/cli']
-
-Common = [
-    # Dev Tools
-    'git',
-    'nodejs',
-    # Common Tools
-    'slack',
-    'neovim'
-]
-
-Windows = [
-    # Dev Tools
-    'pip',
-    'python3',
-    'visualstudio2019buildtools',
-    'visualstudio2019-workload-vctools',
-    'llvm',
-    'vscode',
-    'activeperl',
-    'nodejs',
-    'ruby',
-    'flutter',
-    'dart-sdk',
-    # Common Tools
-    '7zip.install',
-    'cmdermini',
-    'miktex',
-    'synctrayzor',
-    # Fonts
-    'Hasklig',
-    'FiraCode'
-]
-
-Darwin = [
-    # Dev Tools
-    'python3',
-    'llvm',
-    'node',
-    'ruby',
-    'flutter',
-    'dart'
-]
-
-DarwinCask = [
-    # Common Tools
-    'slack',
-    # Dev Tools
-    'visual-studio-code',
-    # Fonts
-    'font-hasklig',
-    'font-fira-code',
-    'font-iosevka'
-]
-
-Debian = [
-    # Dev Tools
-    'python3.6',
-    'python3-pip',
-    'make',
-    'gcc',
-    'clang-7',
-    'lldb-7',
-    'lld-7',
-    'visual-studio-code',
-    'nodejs',
-    'ruby-full',
-    'flutter',
-    'dart',
-    # Fonts
-    'fonts-firacode',
-    'fonts-iosevka',
-    'fonts-hasklig'
-]
-
-RedHat = [
-    # Dev Tools
-    'code',
-    'gettext-devel',
-    'openssl-devel',
-    'perl-CPAN',
-    'perl-devel',
-    'zlib-devel',
-    'python36',
-    'python-pip',
-    'devtoolset-7',
-    'llvm-toolset-7',
-    'nodejs',
-    'ruby'
-]
+from config.pkg.node import *
+from config.pkg.python import *
+from config.pkg.ruby import *
 
 ################################################################################
 

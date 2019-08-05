@@ -1,0 +1,1 @@
+Npm = ['neovim', '@vue/cli']
