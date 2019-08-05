@@ -8,62 +8,15 @@ import zipfile
 
 ################################################################################
 
-from config.os.common import *
-from config.os.windows import *
-from config.os.darwin import *
-from config.os.debian import *
-from config.os.redhat import *
+from config.bootstrap import *
+from config.packages import *
+from config.utils import *
 
 from config.pkg.node import *
 from config.pkg.python import *
 from config.pkg.ruby import *
 
 ################################################################################
-
-
-def match(platform, candidate):
-    return platform.find(candidate) != -1
-
-
-def windows():
-    return 'Windows' in platform.uname()[0]
-
-
-def darwin():
-    return 'Darwin' in platform.uname()[0]
-
-
-def linux():
-    return 'Linux' in platform.uname()[0]
-
-
-def debian():
-    return linux() and match(platform.linux_distribution()[0], 'Debian')
-
-
-def ubuntu():
-    return linux() and match(platform.linux_distribution()[0], 'Ubuntu')
-
-
-def debian_dist():
-    return debian() or ubuntu()
-
-
-def redhat():
-    return linux() and match(platform.linux_distribution()[0], 'Red Hat')
-
-
-def centos():
-    return linux() and match(platform.linux_distribution()[0], 'CentOS')
-
-
-def redhat_dist():
-    return redhat() or centos()
-
-
-def run(cmd):
-    print('calling: ' + cmd)
-    return subprocess.call(cmd, shell=True) == 0
 
 
 def copy_folder(src, dst):
@@ -125,73 +78,10 @@ def scatter_config():
 
 
 def init():
-    if windows():
-        run('@"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString(\'https://chocolatey.org/install.ps1\'))" && SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"'
-            )
-        run('choco upgrade chocolatey')
-        run('choco upgrade -y')
-    elif darwin():
-        run('xcode-select --install')
-
-        run('brew tap caskroom/cask')
-        run('brew tap caskroom/fonts')
-    elif debian_dist():
-        run('wget https://packages.microsoft.com/keys/microsoft.asc')
-        run('cat microsoft.asc | gpg --dearmor > microsoft.gpg')
-        run('sudo install -o root -g root -m 644 microsoft.gpg /etc/apt/trusted.gpg.d/'
-            )
-        run('sudo sh -c \'echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list\''
-            )
-        run('sudo apt-get install apt-transport-https')
-        run('sudo apt-get update -y')
-    elif redhat_dist():
-        if redhat():
-            run('sudo yum install')
-            run('sudo yum-config-manager --enable rhel-server-rhscl-7-rpms')
-            run('sudo subscription-manager repos --enable rhel-7-server-optional-rpms'
-                )
-            run('sudo subscription-manager repos --enable rhel-server-rhscl-7-rpms'
-                )
-            run('wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm'
-                )
-            run('sudo yum install epel-release-latest-7.noarch.rpm')
-            run('sudo yum install epel-release')
-        if centos():
-            run('sudo yum -y install centos-release-scl')
-            run('sudo yum -y install https://centos7.iuscommunity.org/ius-release.rpm'
-                )
-
-        run('sudo yum -y gcc-c++ make')
-        run('curl -sL https://rpm.nodesource.com/setup_10.x | sudo -E bash -')
-        run('sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc'
-            )
-        run('sudo echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
-            )
-        run('sudo yum check-update')
+    bootstrap_os()
 
 
 Session = {"installed": [], "updated": [], "failed": []}
-
-
-def merge(orig, add):
-    orig.extend([p for p in add if p not in orig])
-    return orig
-
-
-def pkgmgr_pkg():
-    select = Common
-
-    if windows():
-        select = merge(select, Windows)
-    elif darwin():
-        select = merge(select, Darwin)
-        select = merge(select, DarwinCask)
-    elif debian_dist():
-        select = merge(select, Debian)
-    elif redhat_dist():
-        select = merge(select, RedHat)
-
-    return select
 
 
 def python_pkg():
@@ -322,7 +212,7 @@ def deploy():
     init()
 
     install_cmd, check_cmd, update_cmd, post_cmd = pkgmgr_cmd()
-    packages = pkgmgr_pkg()
+    packages = os_packages()
     install(install_cmd, check_cmd, update_cmd, post_cmd, packages)
 
     install_cmd, check_cmd, update_cmd, post_cmd = python_cmd()
