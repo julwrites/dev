@@ -4,14 +4,9 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "gather",
+            "label": "build",
             "type": "shell",
-            "command": "python gather.py"
-        },
-        {
-            "label": "scatter",
-            "type": "shell",
-            "command": "python scatter.py"
+            "command": "pyinstaller --onefile --uac-admin src/deploy.py"
         }
     ]
 }

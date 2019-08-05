@@ -3,10 +3,5 @@ from omnipytent import *
 
 
 @task
-def gather(ctx):
-    BANG('python', 'gather.py')
-
-
-@task
-def scatter(ctx):
-    BANG('python', 'scatter.py')
+def build(ctx):
+    BANG('pyinstaller', '--onefile', '--uac-admin', 'src/deploy.py')
