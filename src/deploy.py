@@ -40,43 +40,6 @@ def script_path():
 ################################################################################
 
 
-def checkout_config(dest):
-    run('git clone https://github.com/julwrites/nvim ' + dest)
-
-
-def scatter_config():
-    src = os.path.join(script_path(), 'nvim')
-
-    if windows():
-        dest = os.path.join(os.getenv('LOCALAPPDATA'), 'nvim')
-    else:
-        dest = '~/.config/nvim'
-
-    if not os.path.exists(dest):
-        checkout_config(dest)
-
-    os.chdir(dest)
-
-    if not run('git pull'):
-        os.chdir(script_path())
-        shutil.rmtree(dest)
-        checkout_config(dest)
-
-    os.chdir(dest)
-
-    if windows():
-        dest = os.path.join(os.getenv('LOCALAPPDATA'), '..')
-    else:
-        dest = '~/.vim'
-
-    distutils.dir_util.copy_file('.vimrc', )
-
-    os.chdir(script_path())
-
-
-################################################################################
-
-
 def init():
     bootstrap_os()
 
@@ -261,7 +224,5 @@ def report():
 ################################################################################
 
 deploy()
-
-scatter_config()
 
 report()
