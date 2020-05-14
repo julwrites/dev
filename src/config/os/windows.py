@@ -9,9 +9,9 @@ Windows = [
     'vscode',
     'visualstudio2019buildtools',
     'visualstudio2019-workload-vctools',
-    'vmware-workstation-player',
+    # Vim Tools
+    'fzf,
     # Programming Tools
-    'python2',
     'python3',
     'pip',
     'llvm',
@@ -22,7 +22,6 @@ Windows = [
     'dart-sdk',
     # Common Tools
     '7zip.install',
-    'cmdermini',
     'miktex',
     'synctrayzor',
     # Fonts
