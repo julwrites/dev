@@ -10,7 +10,7 @@ Windows = [
     'visualstudio2019buildtools',
     'visualstudio2019-workload-vctools',
     # Vim Tools
-    'fzf,
+    'fzf',
     # Programming Tools
     'python3',
     'pip',
