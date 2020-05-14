@@ -12,6 +12,8 @@ Darwin = [
     'ruby',
     'flutter',
     'dart'
+    # Vim Tools
+    'fzf'
 ]
 
 DarwinCask = [
