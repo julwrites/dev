@@ -11,7 +11,7 @@ Darwin = [
     'node',
     'ruby',
     'flutter',
-    'dart'
+    'dart',
     # Vim Tools
     'fzf'
 ]
