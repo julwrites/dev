@@ -61,6 +61,7 @@ sed \
 
 # Generate devcontainer.json from template
 sed \
+    -e "s|{{PROJECT_PATH}}|${PROJECT_PATH}|g" \
     -e "s/{{PROJECT_NAME}}/${PROJECT_NAME}/g" \
     -e "s/{{PROJECT_CONTAINER_IMAGE}}/${CONTAINER_IMAGE}/g" \
     -e "s/{{AWS_PROFILE}}/${AWS_PROFILE}/g" \
@@ -72,6 +73,13 @@ sed \
     -e "s/{{PROJECT_CONTAINER_IMAGE}}/${CONTAINER_IMAGE}/g" \
     .devcontainer/build.sh.template > "${PROJECT_PATH}/.devcontainer/build.sh"
 chmod +x "${PROJECT_PATH}/.devcontainer/build.sh"
+
+# Generate launch.sh from template
+sed \
+    -e "s/{{PROJECT_CONTAINER_IMAGE}}/${CONTAINER_IMAGE}/g" \
+    .devcontainer/launch.sh.template > "${PROJECT_PATH}/.devcontainer/launch.sh"
+chmod +x "${PROJECT_PATH}/.devcontainer/launch.sh"
+
 
 echo "DevPod environment setup complete for project: ${PROJECT_NAME}"
 echo "Project path: ${PROJECT_PATH}"

@@ -20,13 +20,11 @@
       "AWS_PROFILE": "{{AWS_PROFILE}}"
   },
 
-  "remoteEnv": {
-      "HOME": "/home/vscode"
-  },
-
   "mounts": [
-      "source=${localEnv:HOME}/.aws,target=/home/vscode/.aws,type=bind"
+      "source=${localEnv:HOME}/.aws,target=/home/vscode/.aws,type=bind",
+      "source={{PROJECT_PATH}}/.devcontainer,target=/home/vscode/.devcontainer,type=bind",
+      "source=${localEnv:HOME}/Library/Application Support/io.datasette.llm,target=/home/vscode/.config/io.datasette.llm,type=bind"
   ],
 
-  "postCreateCommand": "git config --global --add safe.directory {{WORKSPACE_DIR}}"
+  "postCreateCommand": "sh /home/vscode/.devcontainer/launch.sh {{WORKSPACE_DIR}}"
 }

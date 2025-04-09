@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# This script is to set up any things that must happen only AFTER the dockerfile and devcontainer setup process has run
+
+WORKSPACE_DIR=$1
+
+# Set up trusted directories
+git config --global --add safe.directory $WORKSPACE_DIR
+
+# Set up LLM
+llm --version
+LLM_LOGS_PATH=$(cd "$(dirname $(llm logs path))" && pwd)
+IO_DATASETTE_LLM=$(cd "~/.config/io.datasette.llm" && pwd)
+
+if [ "$IO_DATASETTE_LLM" = "$LLM_LOGS_PATH" ]; then
+  llm models
+else
+  rm -rf $LLM_LOGS_PATH
+  ln -s "$IO_DATASETTE_LLM" $LLM_LOGS_PATH
+fi

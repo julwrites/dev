@@ -48,6 +48,8 @@ ENV PATH="/home/vscode/.local/bin:$PATH"
 RUN uv python install
 
 # LLM Tooling
+
+RUN mkdir /home/vscode/.config/io.datasette.llm
 RUN uv tool install llm
 RUN uvx llm install llm-docs
 RUN uvx llm install llm-cmd
