@@ -1,0 +1,30 @@
+#!/bin/bash
+
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+
+if ! command -v devpod 2>&1 >/dev/null; then
+  echo "devpod could not be found"
+  unameOut="$(uname -s)"
+  case "${unameOut}" in
+  Linux*) machine=Linux ;;
+  Darwin*) machine=Mac ;;
+  *) machine="UNKNOWN:${unameOut}" ;;
+  esac
+
+  echo ${machine}
+
+  if [ "$machine" == "Mac" ]; then
+    curl -L -o devpod "https://github.com/loft-sh/devpod/releases/latest/download/devpod-darwin-arm64" && sudo install -c -m 0755 devpod /usr/local/bin && rm -f devpod
+  elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
+    curl -L -o devpod "https://github.com/loft-sh/devpod/releases/latest/download/devpod-linux-arm64" && sudo install -c -m 0755 devpod /usr/local/bin && rm -f devpod
+  fi
+fi
+
+devpod down "$SCRIPT_DIR/.."
+
+devpod down "$SCRIPT_DIR/.."
+
+docker build -f $SCRIPT_DIR/Dockerfile $SCRIPT_DIR -t {{PROJECT_CONTAINER_IMAGE}}-devcontainer:latest
+
+# Start the devpod and capture its hostname/connection details
+devpod up "$SCRIPT_DIR/.." --devcontainer-path "./.devcontainer/devcontainer.json"

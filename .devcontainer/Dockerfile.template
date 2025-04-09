@@ -1,0 +1,50 @@
+FROM mcr.microsoft.com/devcontainers/base:debian
+
+RUN sudo apt-get update -y && apt-get clean && apt-get install -y build-essential
+RUN sudo apt-get install -y --no-install-recommends software-properties-common
+RUN sudo apt-get upgrade -y
+RUN sudo apt-get install ninja-build gettext cmake unzip curl build-essential ripgrep -y
+
+# Install AWS CLI
+RUN curl -Lo aws-sam-cli-linux-arm64.zip "https://github.com/aws/aws-sam-cli/releases/latest/download/aws-sam-cli-linux-arm64.zip"
+RUN unzip aws-sam-cli-linux-arm64.zip -d sam-installation
+RUN sudo ./sam-installation/install
+RUN rm -rf aws-sam-cli-linux-arm64.zip
+
+# Install docker TUI
+RUN LAZYDOCKER_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazydocker/releases/latest" | grep -Po '"tag_name": "v\K[^"]*') && curl -Lo lazydocker.tar.gz "https://github.com/jesseduffield/lazydocker/releases/latest/download/lazydocker_${LAZYDOCKER_VERSION}_Linux_arm64.tar.gz"
+RUN tar -xvzf lazydocker.tar.gz
+RUN sudo install lazydocker /usr/local/bin
+
+# Cleanup
+RUN rm -rf lazydocker*
+
+# Running on one line because each docker command is essentially an individual shell script, so shell variables do not persist
+RUN LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | grep -Po '"tag_name": "v\K[^"]*') && curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/latest/download/lazygit_${LAZYGIT_VERSION}_Linux_arm64.tar.gz"
+RUN tar -xvzf lazygit.tar.gz
+RUN sudo install lazygit /usr/local/bin
+
+# Cleanup
+RUN rm -rf lazygit*
+
+# Language Support
+RUN sudo apt-get update -y
+RUN sudo apt-get upgrade -y
+RUN sudo apt-get install clang-format -y
+
+RUN curl -fsSL https://deb.nodesource.com/setup_23.x -o nodesource_setup.sh
+RUN sudo -E bash nodesource_setup.sh
+RUN sudo apt-get install -y nodejs
+
+RUN curl -fsSL https://astral.sh/uv/install.sh | bash
+ENV PATH="/root/.local/bin:${PATH}"
+
+RUN uv python install
+
+# LLM Tooling
+RUN uv tool install llm
+RUN uvx llm install llm-docs
+RUN uvx llm install llm-cmd
+RUN alias llm="uvx llm" >> ~/.bashrc
+RUN alias llm-docs="uvx llm -f docs:" >> ~/.bashrc
+RUN alias llm-cmd="uvx llm cmd" >> ~/.bashrc
