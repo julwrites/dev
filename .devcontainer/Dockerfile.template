@@ -1,6 +1,9 @@
 FROM mcr.microsoft.com/devcontainers/base:debian
 
-RUN sudo apt-get update -y && apt-get clean && apt-get install -y build-essential
+USER vscode
+WORKDIR /home/vscode
+
+RUN sudo apt-get update -y && sudo apt-get clean && sudo apt-get install -y build-essential
 RUN sudo apt-get install -y --no-install-recommends software-properties-common
 RUN sudo apt-get upgrade -y
 RUN sudo apt-get install ninja-build gettext cmake unzip curl build-essential ripgrep -y
@@ -30,14 +33,17 @@ RUN rm -rf lazygit*
 # Language Support
 RUN sudo apt-get update -y
 RUN sudo apt-get upgrade -y
+
+RUN sudo apt-get install golang -y
+
 RUN sudo apt-get install clang-format -y
 
 RUN curl -fsSL https://deb.nodesource.com/setup_23.x -o nodesource_setup.sh
 RUN sudo -E bash nodesource_setup.sh
 RUN sudo apt-get install -y nodejs
 
-RUN curl -fsSL https://astral.sh/uv/install.sh | bash
-ENV PATH="/root/.local/bin:${PATH}"
+RUN curl -LsSf https://astral.sh/uv/install.sh | sh
+ENV PATH="/home/vscode/.local/bin:$PATH"
 
 RUN uv python install
 
@@ -45,6 +51,7 @@ RUN uv python install
 RUN uv tool install llm
 RUN uvx llm install llm-docs
 RUN uvx llm install llm-cmd
-RUN alias llm="uvx llm" >> ~/.bashrc
-RUN alias llm-docs="uvx llm -f docs:" >> ~/.bashrc
-RUN alias llm-cmd="uvx llm cmd" >> ~/.bashrc
+
+RUN echo 'alias llm="uvx llm"' >> /home/vscode/.bash_aliases
+RUN echo 'alias llm-docs="uvx llm -f docs:"' >> /home/vscode/.bash_aliases
+RUN echo 'alias llm-cmd="uvx llm cmd"' >> /home/vscode/.bash_aliases

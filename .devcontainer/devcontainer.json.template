@@ -1,32 +1,32 @@
 {
-    "name": "{{PROJECT_NAME}} Development Environment",
-    "image": "{{PROJECT_CONTAINER_IMAGE}}-devcontainer:latest",
+  "name": "{{PROJECT_NAME}} Development Environment",
+  "image": "{{PROJECT_CONTAINER_IMAGE}}-devcontainer:latest",
 
-    "features": {
-        "ghcr.io/devcontainers/features/docker-in-docker:2": {
-            "moby": true,
-            "azureDnsAutoDetection": true,
-            "installDockerBuildx": true,
-            "installDockerComposeSwitch": true,
-            "version": "latest",
-            "dockerDashComposeVersion": "latest"
-        },
-        "ghcr.io/devcontainers/features/aws-cli:1": {
-            "version": "latest"
-        }
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {
+      "moby": true,
+      "azureDnsAutoDetection": true,
+      "installDockerBuildx": true,
+      "installDockerComposeSwitch": true,
+      "version": "latest",
+      "dockerDashComposeVersion": "latest"
     },
-
-    "containerEnv": {
-        "AWS_PROFILE": "{{AWS_PROFILE}}"
+    "ghcr.io/devcontainers/features/aws-cli:1": {
+      "version": "latest"
     },
+  },
 
-    "remoteEnv": {
-        "HOME": "/home/vscode"
-    },
+  "containerEnv": {
+      "AWS_PROFILE": "{{AWS_PROFILE}}"
+  },
 
-    "mounts": [
-        "source=${localEnv:HOME}/.aws,target=/home/vscode/.aws,type=bind"
-    ],
+  "remoteEnv": {
+      "HOME": "/home/vscode"
+  },
 
-    "postCreateCommand": "git config --global --add safe.directory {{WORKSPACE_DIR}}"
+  "mounts": [
+      "source=${localEnv:HOME}/.aws,target=/home/vscode/.aws,type=bind"
+  ],
+
+  "postCreateCommand": "git config --global --add safe.directory {{WORKSPACE_DIR}}"
 }
