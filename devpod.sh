@@ -74,13 +74,6 @@ sed \
     .devcontainer/build.sh.template > "${PROJECT_PATH}/.devcontainer/build.sh"
 chmod +x "${PROJECT_PATH}/.devcontainer/build.sh"
 
-# Generate launch.sh from template
-sed \
-    -e "s/{{PROJECT_CONTAINER_IMAGE}}/${CONTAINER_IMAGE}/g" \
-    .devcontainer/launch.sh.template > "${PROJECT_PATH}/.devcontainer/launch.sh"
-chmod +x "${PROJECT_PATH}/.devcontainer/launch.sh"
-
-
 echo "DevPod environment setup complete for project: ${PROJECT_NAME}"
 echo "Project path: ${PROJECT_PATH}"
 echo "Container image name: ${CONTAINER_IMAGE}"

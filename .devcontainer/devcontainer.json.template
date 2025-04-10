@@ -17,14 +17,20 @@
   },
 
   "containerEnv": {
-      "AWS_PROFILE": "{{AWS_PROFILE}}"
+      "AWS_PROFILE": "{{AWS_PROFILE}}",
+      "LLM_USER_PATH": "/home/vscode/.config/io.datasette.llm"
   },
 
   "mounts": [
       "source=${localEnv:HOME}/.aws,target=/home/vscode/.aws,type=bind",
       "source={{PROJECT_PATH}}/.devcontainer,target=/home/vscode/.devcontainer,type=bind",
-      "source=${localEnv:HOME}/Library/Application Support/io.datasette.llm,target=/home/vscode/.config/io.datasette.llm,type=bind"
+
+      // LLM credentials
+      "source=${localEnv:HOME}/Library/Application Support/io.datasette.llm/extra-openai-models.yaml,target=/home/vscode/.config/io.datasette.llm/extra-openai-models.yaml,type=bind"
+      "source=${localEnv:HOME}/Library/Application Support/io.datasette.llm/keys.json,target=/home/vscode/.config/io.datasette.llm/keys.json,type=bind"
   ],
 
-  "postCreateCommand": "sh /home/vscode/.devcontainer/launch.sh {{WORKSPACE_DIR}}"
+  "postCreateCommand": ["git config --global --add safe.directory {{WORKSPACE_DIR}}"],
+
+  "postAttachCommand": ["sh /home/vscode/.devcontainer/attach.sh"]
 }
