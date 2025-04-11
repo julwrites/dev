@@ -26,11 +26,9 @@
       "source={{PROJECT_PATH}}/.devcontainer,target=/home/vscode/.devcontainer,type=bind",
 
       // LLM credentials
-      "source=${localEnv:HOME}/Library/Application Support/io.datasette.llm/extra-openai-models.yaml,target=/home/vscode/.config/io.datasette.llm/extra-openai-models.yaml,type=bind"
-      "source=${localEnv:HOME}/Library/Application Support/io.datasette.llm/keys.json,target=/home/vscode/.config/io.datasette.llm/keys.json,type=bind"
+      "source={{LLM_USER_PATH}}/extra-openai-models.yaml,target=/home/vscode/.config/io.datasette.llm/extra-openai-models.yaml,type=bind",
+      "source={{LLM_USER_PATH}}/keys.json,target=/home/vscode/.config/io.datasette.llm/keys.json,type=bind"
   ],
 
-  "postCreateCommand": ["git config --global --add safe.directory {{WORKSPACE_DIR}}"],
-
-  "postAttachCommand": ["sh /home/vscode/.devcontainer/attach.sh"]
+  "postCreateCommand": ["git config --global --add safe.directory {{WORKSPACE_DIR}}"]
 }

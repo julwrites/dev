@@ -44,6 +44,12 @@ CONTAINER_IMAGE="$PROJECT_NAME"
 # Set workspace directory using project name
 WORKSPACE_DIR="/workspaces/${PROJECT_NAME}"
 
+# Set llm CLI tool path
+LLM_USER_PATH=$(llm logs path)
+LLM_USER_PATH=$(dirname "$LLM_USER_PATH")
+touch "$LLM_USER_PATH/keys.json"
+touch "$LLM_USER_PATH/extra_openai_models.yaml"
+
 # Ensure project path exists
 if [ ! -d "$PROJECT_PATH" ]; then
     echo "Error: Project path '$PROJECT_PATH' does not exist"
@@ -66,6 +72,7 @@ sed \
     -e "s/{{PROJECT_CONTAINER_IMAGE}}/${CONTAINER_IMAGE}/g" \
     -e "s/{{AWS_PROFILE}}/${AWS_PROFILE}/g" \
     -e "s|{{WORKSPACE_DIR}}|${WORKSPACE_DIR}|g" \
+    -e "s|{{LLM_USER_PATH}}|${LLM_USER_PATH}|g" \
     .devcontainer/devcontainer.json.template > "${PROJECT_PATH}/.devcontainer/devcontainer.json"
 
 # Generate build.sh from template
